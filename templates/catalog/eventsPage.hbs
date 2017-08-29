@@ -1,0 +1,12 @@
+{{> header}}
+<h1 class="titleForm">Events</h1>
+<div id="ads" class="ads">
+    {{#each ads}}
+        {{> adBox}}
+    {{else}}
+        <div>
+            <p><i>No events in database!</i></p>
+        </div>
+    {{/each}}
+</div>
+{{> footer}}
