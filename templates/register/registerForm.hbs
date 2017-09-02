@@ -1,3 +1,28 @@
-<form action="#/register"  method="post" class="form">
-
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-4">
+            <div class="page-header">
+                <h1 class="text-center">Please register</h1>
+            </div>
+            <form class="form-horizontal" action="#/register"  method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="usernameRegister">Username:</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter username" id="usernameRegister">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordRegister">Password:</label>
+                        <input type="password" class="form-control" name="password" placeholder="Enter password" id="passwordRegister">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordConfirmRegister">Confirm Password:</label>
+                        <input type="password" class="form-control" name="confirmPassword" placeholder="Enter password" id="passwordConfirmRegister">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OnlineTicketStore</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script src="scripts/jsLibraries/jquery-3.1.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="scripts/jsLibraries/handlebars-v4.0.10.js"></script>
     <script src="scripts/jsLibraries/sammy.js"></script>
     <script src="scripts/jsLibraries/sammyHandlebars.js"></script>
@@ -18,10 +21,46 @@
     <script src="scripts/ticketStore.js"></script>
 </head>
 <body>
+<div id="main"></div>
 
-<div id="container">
+<!--div<div class="container">
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body bg-info">
+                    <div class="col-lg-offset-1 col-lg-10">
+                        <div class="page-header">
+                            <h1 class="text-center">Register</h1>
+                        </div>
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label for="usernameRegister">Username:</label>
+                                    <input type="email" class="form-control" placeholder="Enter username" id="usernameRegister">
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordRegister">Password:</label>
+                                    <input type="password" class="form-control" placeholder="Enter password" id="passwordRegister">
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordConfirmRegister">Confirm Password:</label>
+                                    <input type="password" class="form-control" placeholder="Enter password" id="passwordConfirmRegister">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Register</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
 
-</div>
+
+
+
 
 <div id="notifications">
     <div id="loadingBox" class="notification"><span>Loading …</span></div>
