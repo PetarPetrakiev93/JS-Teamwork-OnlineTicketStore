@@ -2,29 +2,31 @@ const eventsController = {};
 
 //CREATE EVENT
 eventsController.createEventGET = function (ctx) {
-    //TODO: view for create event page
-    // ctx.loggedIn = userManager.isLoggedIn();
-    // ctx.username = userManager.getUsername();
-    // ctx.id = sessionStorage.getItem('userId');
-    //
-    // ctx.loadPartials({
-    //     header: './templates/common/header.hbs',
-    //     footer: './templates/common/footer.hbs',
-    //     createEventForm: './templates/event/create/createEventForm.hbs'
-    // }).then(function () {
-    //     this.partial('./templates/event/create/createEventPage.hbs')
-    // })
+
+    ctx.loggedIn = userManager.isLoggedIn();
+    ctx.username = userManager.getUsername();
+    ctx.id = sessionStorage.getItem('userId');
+
+    ctx.loadPartials({
+        header: './templates/common/header.hbs',
+        footer: './templates/common/footer.hbs',
+        createEventForm: './templates/event/create/createEventForm.hbs'
+    }).then(function () {
+        this.partial('./templates/event/create/createEventPage.hbs')
+    })
 };
 
 eventsController.createEventPOST = function (ctx) {
-    //TODO: create event
-    // let title = ctx.params.title;
-    // let information = ctx.params.information;
-    // let date = new Date();
-    // let price = ctx.params.price;
+
+    let title = ctx.params.eventName;
+    let details = ctx.params.eventDetails;
+    let dateString = ctx.params.eventDate;
+    let parts =dateString.split(/[\\/.-]/);
+    let date = new Date(parts[2],parts[1]-1,parts[0]);
+
     // let availableTickets = ctx.params.availableTickets;
     // let location = ctx.params.location;
-    //let category = ctx.params.category;
+    // let category = ctx.params.category;
     // let event = {
     //     title,
     //     information,

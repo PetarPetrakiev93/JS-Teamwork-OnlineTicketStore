@@ -1,3 +1,32 @@
-<form action="#/createEvent" method="post" class="form">
-
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-4">
+            <div class="page-header">
+                <h1 class="text-center">Create event</h1>
+            </div>
+            <form class="form-horizontal" action="#/createEvent"  method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="createEventName">Event name:</label>
+                        <input type="text" class="form-control" name="eventName" placeholder="Enter event name" id="createEventName">
+                    </div>
+                    <div class="form-group">
+                        <label for="createEventDate">Event date:</label>
+                        <input type="text" class="form-control" name="eventDate" placeholder="Enter event day, month and year" id="createEventDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="createEventDate">Event location:</label>
+                        <input type="text" class="form-control" name="eventLocation" placeholder="Enter event location" id="createEventLocation">
+                    </div>
+                    <div class="form-group">
+                        <label for="createEventDate">Event details:</label>
+                        <textarea class="form-control" name="eventDetails" placeholder="Enter event info" id="createEventLocation"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
