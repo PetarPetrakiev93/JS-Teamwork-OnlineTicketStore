@@ -2,46 +2,85 @@ const eventsController = {};
 
 //CREATE EVENT
 eventsController.createEventGET = function (ctx) {
-
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
+    categoriesManager.getAllCategories()
+        .then(function (categories) {
+           ctx.categories = categories;
+            ctx.loadPartials({
+                header: './templates/common/header.hbs',
+                footer: './templates/common/footer.hbs',
+                createEventForm: './templates/event/create/createEventForm.hbs'
+            }).then(function () {
+                this.partial('./templates/event/create/createEventPage.hbs')
+            })
+        })
+        .catch(messageBox.handleError);
 
-    ctx.loadPartials({
-        header: './templates/common/header.hbs',
-        footer: './templates/common/footer.hbs',
-        createEventForm: './templates/event/create/createEventForm.hbs'
-    }).then(function () {
-        this.partial('./templates/event/create/createEventPage.hbs')
-    })
 };
 
 eventsController.createEventPOST = function (ctx) {
 
-    let title = ctx.params.eventName;
+    //TODO: validations
+
+    let name = ctx.params.eventName;
     let details = ctx.params.eventDetails;
     let dateString = ctx.params.eventDate;
-    let parts =dateString.split(/[\\/.-]/);
-    let date = new Date(parts[2],parts[1]-1,parts[0]);
+    let dateRegex = /(\d+)[\\\/.\-,](\d+)[\\\/.\-,](\d+)/;
+    let match = dateRegex.exec(dateString.toString());
+    if(name.length === 0){
+        messageBox.showError('The event must have a title.');
+        return;
+    }
 
-    // let availableTickets = ctx.params.availableTickets;
-    // let location = ctx.params.location;
-    // let category = ctx.params.category;
-    // let event = {
-    //     title,
-    //     information,
-    //     date,
-    //     price,
-    //     availableTickets,
-    //     location,
-    //     category
-    // };
-    //
-    // eventsManager.createEvent(event)
-    //     .then(function (eventInfo) {
-    //         ctx.redirect('#/events');
-    //         messageBox.showInfo(`Event "${event.title}" created!`);
-    //     }).catch(messageBox.handleError)
+    if(match === null){
+        messageBox.showError('Invalid date format. Try dd/MM/yyy');
+        return;
+    }
+
+
+    let date = new Date(Number(match[3]), Number(match[2] - 1), Number(match[1]));
+    console.log(date);
+    let location = ctx.params.eventLocation;
+    let coverPicture = ctx.params.eventCoverPicture;
+    let totalTickets = ctx.params.eventTotalTickets;
+    let ticketPrice = ctx.params.eventTicketPrice;
+    let categoryId = $('select option:selected').attr('data-catId');
+
+    let event = {
+        EventName: name,
+        Details: details,
+        CDate: date,
+        Location: location,
+        CategoryId: categoryId
+    };
+
+    eventsManager.createEvent(event)
+        .then(function (eventInfo) {
+            let id = eventInfo._id;
+            let picture = {
+                EventId: id,
+                Picture: coverPicture
+            };
+            let ticket = {
+                EventId: id,
+                TotalTickets: totalTickets,
+                AvailableTickets: totalTickets,
+                Price: ticketPrice,
+                SoldTickets: 0
+            };
+
+            picturesManager.createPicture(picture)
+                .then(function (pic) {
+                    ticketsManager.createTicket(ticket)
+                        .then(function (tick) {
+                            ctx.redirect('#/home');
+                            messageBox.showInfo(`Event "${name}" created!`);
+                        })
+                });
+
+        }).catch(messageBox.handleError)
 };
 
 //SHOW EVENTS

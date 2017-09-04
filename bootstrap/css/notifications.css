@@ -12,3 +12,15 @@
     border-radius: 3px;
     position: fixed;
 }
+#loadingBox {
+    background: #7CB3E9;
+    position: fixed;
+}
+#infoBox {
+    background: #393;
+    position: fixed;
+}
+#errorBox {
+    background: #F50;
+    position: fixed;
+}

@@ -1,19 +1,19 @@
 const eventsManager = (() => {
 
     function getEvents() {
-        return requester.get('appdata', 'events');
+        return requester.get('appdata', 'Events');
     }
 
     function getEventDetails(id) {
-        return requester.get('appdata', `events/${id}`)
+        return requester.get('appdata', `Events/${id}`)
     }
 
     function editEvent(id, event) {
-        return requester.update('appdata', `events/${id}`, event);
+        return requester.update('appdata', `Events/${id}`, event);
     }
 
     function createEvent(event) {
-        return requester.post('appdata', 'events', event)
+        return requester.post('appdata', 'Events', event)
     }
 
     function deleteEvent(eventId) {
@@ -21,9 +21,9 @@ const eventsManager = (() => {
     }
 
     function getEventsByCategory(category) {
-        let url = `events?query={"category":"${category}"}`;
+        let url = `events?query={"CategoryId":"${category}"}`;
 
-        return requester.get('appdata', url);
+        return requester.get('Events', url);
     }
 
     return {

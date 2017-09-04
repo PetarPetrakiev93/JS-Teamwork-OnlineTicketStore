@@ -1,9 +1,10 @@
 function startApp() {
     const app = Sammy('#main', function () {
 
-        $('.notification').click((e) => {
+        $('.notification').click(function (e) {
             $(e.target).hide();
         });
+
         this.use('Handlebars', 'hbs');
 
         //HOME

@@ -4,29 +4,67 @@
             <div class="page-header">
                 <h1 class="text-center">Create event</h1>
             </div>
-            <form class="form-horizontal" action="#/createEvent"  method="post">
+            <form class="form-horizontal" action="#/createEvent" method="post">
                 <fieldset>
                     <div class="form-group">
                         <label for="createEventName">Event name:</label>
-                        <input type="text" class="form-control" name="eventName" placeholder="Enter event name" id="createEventName">
+                        <input type="text" class="form-control" name="eventName" placeholder="Enter event name..."
+                               id="createEventName">
                     </div>
                     <div class="form-group">
                         <label for="createEventDate">Event date:</label>
-                        <input type="text" class="form-control" name="eventDate" placeholder="Enter event day, month and year" id="createEventDate">
+                        <input type="text" class="form-control" name="eventDate"
+                               placeholder="Enter event day, month and year..." id="createEventDate">
                     </div>
                     <div class="form-group">
-                        <label for="createEventDate">Event location:</label>
-                        <input type="text" class="form-control" name="eventLocation" placeholder="Enter event location" id="createEventLocation">
+                        <label for="createEventLocation">Event location:</label>
+                        <input type="text" class="form-control" name="eventLocation" placeholder="Enter event location..."
+                               id="createEventLocation">
                     </div>
                     <div class="form-group">
-                        <label for="createEventDate">Event details:</label>
-                        <textarea class="form-control" name="eventDetails" placeholder="Enter event info" id="createEventLocation"></textarea>
+                        <label for="createEventDetails">Event details:</label>
+                        <textarea class="form-control" name="eventDetails" placeholder="Enter event info..."
+                                  id="createEventDetails"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="createEventTotalTickets">Event total tickets:</label>
+                        <input type="number"  class="form-control" name="eventTotalTickets" placeholder="Enter available tickets..."
+                                  id="createEventTotalTickets"/>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <label for="createEventTicketsPrice">Event ticket price:</label>
+                        <input type="number" class="form-control" name="eventTicketPrice" placeholder="Enter ticket price..."
+                                id="createEventTicketsPrice"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="createEventPhoto">Event cover photo:</label>
+                        <input class="form-control" name="eventCoverPicture" placeholder="Enter picture url..."
+                                id="createEventPhoto"/>
+                    </div>
+                    <div class=" form-group">
+                        <div class="dropdown">
+                            <label class="dropdown-toggle" data-toggle="dropdown" for="createEventCategory">Choose category: </label>
+
+                            <div>
+                                <select>
+                                    {{#each categories}}
+                                        <option data-catId="{{_id}}">{{CategoryName}}</option>
+                                    {{else}}
+                                        <option>No categories!</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
+<script>
+
+</script>
