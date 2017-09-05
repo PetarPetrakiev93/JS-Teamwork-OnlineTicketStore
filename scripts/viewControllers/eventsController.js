@@ -21,9 +21,7 @@ eventsController.createEventGET = function (ctx) {
 };
 
 eventsController.createEventPOST = function (ctx) {
-
     //TODO: validations
-
     let name = ctx.params.eventName;
     let details = ctx.params.eventDetails;
     let dateString = ctx.params.eventDate;
@@ -39,15 +37,15 @@ eventsController.createEventPOST = function (ctx) {
         return;
     }
 
-
     let date = new Date(Number(match[3]), Number(match[2] - 1), Number(match[1]));
-    console.log(date);
+
     let location = ctx.params.eventLocation;
     let coverPicture = ctx.params.eventCoverPicture;
     let totalTickets = ctx.params.eventTotalTickets;
     let ticketPrice = ctx.params.eventTicketPrice;
     let categoryId = $('select option:selected').attr('data-catId');
 
+    console.log(date);
     let event = {
         EventName: name,
         Details: details,
@@ -75,7 +73,7 @@ eventsController.createEventPOST = function (ctx) {
                 .then(function (pic) {
                     ticketsManager.createTicket(ticket)
                         .then(function (tick) {
-                            ctx.redirect('#/home');
+                            ctx.redirect('#/events');
                             messageBox.showInfo(`Event "${name}" created!`);
                         })
                 });
@@ -85,10 +83,42 @@ eventsController.createEventPOST = function (ctx) {
 
 //SHOW EVENTS
 eventsController.displayEvents = function (ctx) {
-    eventsManager.getEvents()
-        .then(function (events) {
-            //TODO: append needed things and redirect
+    ctx.loggedIn = userManager.isLoggedIn();
+    ctx.username = userManager.getUsername();
+    ctx.id = sessionStorage.getItem('userId');
+
+    picturesManager.getAllPictures()
+        .then(function (pictures) {
+            eventsManager.getEvents()
+                .then(function (events) {
+                    ctx.events = events.sort((a, b) => compareEventDate(a, b));
+                    let eventId;
+                    for (let event of events) {
+                        eventId = event._id;
+                        let eventPictures = pictures.filter(a => a.EventId === eventId);
+                        pictures = pictures.filter(a => a.EventId !== eventId);
+                        event.CDate = event.CDate.substring(0, 10);
+                        event.Picture = eventPictures[0].Picture;
+                    }
+                    ctx.loadPartials({
+                        header: './templates/common/header.hbs',
+                        footer: './templates/common/footer.hbs',
+                        eventBox: './templates/catalog/eventBox.hbs'
+                    }).then(function () {
+                        this.partial('./templates/catalog/eventsPage.hbs');
+                    })
+                })
         }).catch(messageBox.handleError);
+
+    function compareEventDate(a, b) {
+        let eventAdate = new Date(a.CDate).getTime();
+        let eventBdate = new Date(b.CDate).getTime();
+        let now = Date.now();
+
+        let aTimelapse = eventAdate - now;
+        let bTimelapse = eventBdate - now;
+        return aTimelapse - bTimelapse;
+    }
 };
 
 //SHOW EVENTS BY CATEGORY

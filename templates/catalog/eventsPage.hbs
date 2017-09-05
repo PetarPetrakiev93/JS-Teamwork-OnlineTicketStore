@@ -1,12 +1,22 @@
 {{> header}}
-<h1 class="titleForm">Events</h1>
-<div id="ads" class="ads">
-    {{#each ads}}
-        {{> adBox}}
-    {{else}}
-        <div>
-            <p><i>No events in database!</i></p>
+<div class="catalog-container" style="background-color: #f2f2f2">
+    <div class="jumbotron" style="margin-bottom: 0">
+        <div class="container text-center">
+            <h1>Online Store</h1>
+            <p>Mission, Vission &amp; Values</p>
         </div>
-    {{/each}}
-</div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            {{#each events}}
+                {{> eventBox}}
+            {{else}}
+                <div>
+                    <p><i>No events in database!</i></p>
+                </div>
+            {{/each}}
+        </div>
+    </div><br>
+</div><br><br>
 {{> footer}}
