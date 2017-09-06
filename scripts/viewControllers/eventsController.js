@@ -98,7 +98,11 @@ eventsController.displayEvents = function (ctx) {
                         let eventPictures = pictures.filter(a => a.EventId === eventId);
                         pictures = pictures.filter(a => a.EventId !== eventId);
                         event.CDate = event.CDate.substring(0, 10);
-                        event.Picture = eventPictures[0].Picture;
+                        if(eventPictures[0]) {
+                            event.Picture = eventPictures[0].Picture;
+                        }else{
+                            event.Picture = '';
+                        }
                     }
                     ctx.loadPartials({
                         header: './templates/common/header.hbs',
