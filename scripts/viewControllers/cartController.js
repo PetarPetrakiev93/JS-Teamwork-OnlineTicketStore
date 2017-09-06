@@ -48,6 +48,7 @@ cartController.getOrders = function (ctx) {
                                             }else{
                                                 let availableTickets = Number(tickets.AvailableTickets) - Number(o.numberTickets);
                                                 tickets.AvailableTickets = availableTickets;
+                                                tickets.SoldTickets = Number(o.numberTickets);
                                                 requester.update('appdata', 'Tickets/' + o.id, tickets);
                                             }
                                         })
