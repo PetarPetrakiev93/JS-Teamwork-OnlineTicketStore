@@ -1,0 +1,9 @@
+{{> header}}
+    <div class="panel panel-primary details">
+    {{#each orders}}
+        {{> order}}
+    {{/each}}
+    </div>
+    <div class="order panel-footer">Total price: {{totalPrice}}</div>
+    <div class="order panel-footer"><button class="checkout btn-success">Check Out</button></div>
+{{> footer}}

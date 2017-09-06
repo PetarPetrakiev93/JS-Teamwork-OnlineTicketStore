@@ -1,0 +1,11 @@
+.admin-control{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.history{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

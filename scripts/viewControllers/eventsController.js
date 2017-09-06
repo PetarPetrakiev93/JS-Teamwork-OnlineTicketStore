@@ -7,7 +7,7 @@ eventsController.createEventGET = function (ctx) {
     ctx.id = sessionStorage.getItem('userId');
     categoriesManager.getAllCategories()
         .then(function (categories) {
-           ctx.categories = categories;
+            ctx.categories = categories;
             ctx.loadPartials({
                 header: './templates/common/header.hbs',
                 footer: './templates/common/footer.hbs',
@@ -27,12 +27,12 @@ eventsController.createEventPOST = function (ctx) {
     let dateString = ctx.params.eventDate;
     let dateRegex = /(\d+)[\\\/.\-,](\d+)[\\\/.\-,](\d+)/;
     let match = dateRegex.exec(dateString.toString());
-    if(name.length === 0){
+    if (name.length === 0) {
         messageBox.showError('The event must have a title.');
         return;
     }
 
-    if(match === null){
+    if (match === null) {
         messageBox.showError('Invalid date format. Try dd/MM/yyy');
         return;
     }
@@ -98,9 +98,9 @@ eventsController.displayEvents = function (ctx) {
                         let eventPictures = pictures.filter(a => a.EventId === eventId);
                         pictures = pictures.filter(a => a.EventId !== eventId);
                         event.CDate = event.CDate.substring(0, 10);
-                        if(eventPictures[0]) {
+                        if (eventPictures[0]) {
                             event.Picture = eventPictures[0].Picture;
-                        }else{
+                        } else {
                             event.Picture = '';
                         }
                     }
@@ -109,7 +109,13 @@ eventsController.displayEvents = function (ctx) {
                         footer: './templates/common/footer.hbs',
                         eventBox: './templates/catalog/eventBox.hbs'
                     }).then(function () {
-                        this.partial('./templates/catalog/eventsPage.hbs');
+                        this.partial('./templates/catalog/eventsPage.hbs').then(function () {
+                            $('.clickable').click(function () {
+                                let id = $(this).attr('id');
+                                ctx.redirect(`#/events/:${id}`);
+                            })
+                        })
+
                     })
                 })
         }).catch(messageBox.handleError);
@@ -146,8 +152,42 @@ eventsController.editEventPOST = function (ctx) {
 //VIEW EVENT DETAILS
 eventsController.eventDetailsGET = function (ctx) {
     let eventId = ctx.params.id.substring(1);
+    ctx.loggedIn = userManager.isLoggedIn();
+    ctx.username = userManager.getUsername();
+    ctx.id = sessionStorage.getItem('userId');
 
-    //TODO: show detailed view for event
+    picturesManager.getAllPicturesByEventId(eventId)
+        .then(function (picture) {
+            eventsManager.getEventDetails(eventId)
+                .then(function (event) {
+                    ctx.CDate = event.CDate.substring(0, 10);
+                    ctx.Location = event.Location;
+                    ctx.Details = event.Details;
+                    ctx.EventName = event.EventName;
+                    if (picture[0]) {
+                        ctx.Picture = picture[0].Picture;
+                    } else {
+                        ctx.Picture = '';
+                    }
+                    ticketsManager.getTicketsForEvent(eventId)
+                        .then(function (tickets) {
+                            ctx._id = tickets[0]._id;
+                            ctx.availableTickets = tickets[0].AvailableTickets;
+                            ctx.totalTickets = tickets[0].TotalTickets;
+                            ctx.soldTickets = tickets[0].SoldTickets;
+                            ctx.price = tickets[0].Price;
+                            ctx.EventId = tickets[0].EventId;
+                            ctx.loadPartials({
+                                header: './templates/common/header.hbs',
+                                footer: './templates/common/footer.hbs',
+                                tickets: './templates/tickets/tickets.hbs'
+                            }).then(function () {
+                                this.partial('./templates/details/detailsView.hbs');
+                            });
+                        });
+
+                });
+        })
 };
 
 //DELETE EVENT
@@ -160,4 +200,42 @@ eventsController.deleteEvent = function (ctx) {
 
     messageBox.showInfo('Event deleted!');
 
+};
+
+//ORDER TICKETS
+eventsController.orderTickets = function (ctx) {
+    if(Number(ctx.params.buyTickets) <= 0 || Number(ctx.params.buyTickets) > ctx.params.availableTickets){
+        messageBox.showError('Tickets not available!');
+        ctx.redirect('#/events/:'+ctx.params.EventId);
+    }else {
+        let order = {};
+        order.id = ctx.params.id.substr(1);
+        order.price = ctx.params.price;
+        order.eventId = ctx.params.EventId;
+        order.eventName = ctx.params.EventName;
+        order.numberTickets = ctx.params.buyTickets;
+        requester.get('user', sessionStorage.getItem('userId'))
+            .then(function (user) {
+                if (user.basket === undefined) {
+                    user.basket = [];
+                    user.basket.push(order);
+                } else {
+                    let idExists = false;
+                    for (let o of user.basket) {
+                        if (o.id === order.id) {
+                            o.numberTickets = Number(o.numberTickets) + Number(order.numberTickets);
+                            idExists = true;
+                        }
+                    }
+                    if (idExists === false) {
+                        user.basket.push(order);
+                    }
+                }
+
+                requester.update('user', sessionStorage.getItem('userId'), user)
+                    .then(function () {
+                        messageBox.showInfo('Order added to basket');
+                    }).catch(messageBox.showError);
+            })
+    }
 };

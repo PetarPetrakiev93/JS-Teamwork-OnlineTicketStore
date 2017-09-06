@@ -1,0 +1,14 @@
+{{> header}}
+<div class="panel panel-primary details">
+    <div class="panel-heading">{{EventName}}</div>
+    {{#if Picture}}
+        <div class="panel-body"><img src="{{Picture}}" class="img-responsive" style="height: 225px" style="" alt="Image" ></div>
+    {{else}}
+        <div class="panel-body"><img src="././bootstrap/static/no-image.jpg"  class="img-responsive"  alt="Image"></div>
+    {{/if}}
+    <div class="panel-footer">Date: {{CDate}}</div>
+    <div class="panel-footer">Details: {{Details}}</div>
+    <div class="panel-footer">Location: {{Location}}</div>
+</div>
+{{> tickets}}
+{{> footer}}

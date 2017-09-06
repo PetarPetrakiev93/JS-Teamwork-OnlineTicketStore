@@ -1,0 +1,33 @@
+{{> header}}
+<h1 align="center">User Info</h1>
+<h2 align="center">{{username}}</h2>
+{{#if isAdmin}}
+    <div class="admin-control">
+        <button class="admin-control btn btn-danger">Admin Control</button>
+    </div>
+    <div class="admin-control">
+        <div class="admin-control-content" style="display: none;">
+            <ul>
+                <li>
+                    test
+                </li>
+            </ul>
+        </div>
+    </div>
+{{/if}}
+{{#if loggedIn}}
+    <div class="history">
+        <button class="history btn btn-info">Show History</button>
+    </div>
+    <div class="history">
+        <div class="history-content" style="display: none;">
+            <ul>
+                <li>
+                    test
+                </li>
+            </ul>
+        </div>
+    </div>
+{{/if}}
+
+{{> footer}}

@@ -25,7 +25,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {{#if loggedIn}}
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Hello, {{username}}</a></li>
+                    <li><a href="#/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
+                    <li><a href="#/userDetails"><span class="glyphicon glyphicon-user"></span> Hello, {{username}}</a></li>
                     <li><a href="#/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 {{else}}
                     <li><a href="#/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>

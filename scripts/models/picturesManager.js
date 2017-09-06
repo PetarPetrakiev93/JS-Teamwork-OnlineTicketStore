@@ -4,9 +4,9 @@ const picturesManager = (() => {
     }
 
     function getAllPicturesByEventId(id) {
-        let url = `events?query={"EventId":"${id}"}`;
+        let url = 'Pictures/?query={"EventId":"'+ id + '"}';
 
-        return requester.get('Pictures', url);
+        return requester.get('appdata', url);
     }
 
     function getAllPictures() {

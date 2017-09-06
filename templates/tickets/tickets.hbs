@@ -1,0 +1,33 @@
+<form action="#/tickets/:{{_id}}" method="post">
+
+    <div class="panel-footer">
+        <label>
+            <div>Total Tickets</div>
+            <a>{{totalTickets}}</a>
+            <input type="text" name="totalTickets" id="totalTickets" value="{{totalTickets}}" style="display: none;"/>
+        </label>
+        <label>
+            <div>Available Tickets</div>
+            <a>{{availableTickets}}</a>
+            <input type="text" name="availableTickets" id="availableTickets" value="{{availableTickets}}" style="display: none;"/>
+        </label>
+        <label>
+            <div>Sold Tickets</div>
+            <a>{{soldTickets}}</a>
+            <input type="text" name="soldTickets" id="soldTickets" value="{{soldTickets}}" style="display: none;"/>
+        </label>
+    </div>
+    <div class="panel-footer">
+        <div>Price</div>
+        <a>{{price}}</a>
+        <input type="text" name="price" id="price" value="{{price}}" style="display: none;"/>
+    </div>
+
+    <div class="panel-footer">
+        <div>Order Tickets</div>
+        <input type="text" name="EventName" value="{{EventName}}" style="display: none;">
+        <input type="text" name="EventId" value="{{EventId}}" style="display: none;">
+        <input type="number" name="buyTickets" id="buyTickets"/>
+        <input type="submit" value="Order"/>
+    </div>
+</form>

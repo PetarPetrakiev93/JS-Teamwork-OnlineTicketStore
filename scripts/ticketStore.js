@@ -19,6 +19,9 @@ function startApp() {
         this.get('#/login', userController.loginGET);
         this.post('#/login', userController.loginPOST);
 
+        //USER DETAILS
+        this.get('#/userDetails', userController.userDetails);
+
         //LOGOUT
         this.get('#/logout', userController.logout);
 
@@ -32,7 +35,7 @@ function startApp() {
         this.get('#/events', eventsController.displayEvents);
 
         //SHOW EVENTS BY CATEGORY
-        this.get('#/events/:category', eventsController.displayEventsByCategory);
+        this.get('#/events/category/:id', eventsController.displayEventsByCategory);
 
         //EDIT EVENT
         this.get('#/events/edit/:id', eventsController.editEventGET);
@@ -43,6 +46,12 @@ function startApp() {
 
         //DELETE EVENT
         this.get('#/events/delete/:id', eventsController.deleteEvent);
+
+        //ORDER TICKET
+        this.post('#/tickets/:id', eventsController.orderTickets);
+
+        //CART
+        this.get('#/cart', cartController.getOrders);
 
     });
     app.run();
