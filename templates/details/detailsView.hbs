@@ -1,5 +1,9 @@
 {{> header}}
-<div class="panel panel-primary details">
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+
+
+    <div class="panel panel-primary details">
     <div class="panel-heading">{{EventName}}</div>
     {{#if Picture}}
         <div class="panel-body"><img src="{{Picture}}" class="img-responsive" style="height: 225px" style="" alt="Image" ></div>
@@ -10,9 +14,20 @@
     <div class="panel-footer">Details: {{Details}}</div>
     <div class="panel-footer">Location: {{Location}}</div>
 </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
 {{> tickets}}
-<div>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+<div class="panel-footer">
     <a href="#/events/edit/:{{_id}}"><button class="btn btn-primary" id="btnEdit">Edit</button></a>
     <a href="#/events/delete/:{{_id}}" ><button class="btn btn-danger" id="btnDelete">Delete</button></a>
+</div>
+<div class="col-md-4">
+</div>
+</div>
 </div>
 {{> footer}}
