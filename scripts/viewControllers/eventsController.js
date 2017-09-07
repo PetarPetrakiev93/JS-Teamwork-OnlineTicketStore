@@ -290,6 +290,18 @@ eventsController.deleteEvent = function (ctx) {
     eventsManager.deleteEvent(eventsController.eventId)
         .then(function () {
             ctx.redirect('#/events');
+            picturesManager.getAllPicturesByEventId(eventsController.eventId)
+                .then(function (pictures) {
+                    for (let pic of pictures) {
+                        picturesManager.deletePicture(pic._id);
+                    }
+                    ticketsManager.getTicketsForEvent(eventsController.eventId)
+                        .then(function (tickets) {
+                            for (let tick of tickets) {
+                                ticketsManager.deleteTicket(tick._id);
+                            }
+                        })
+                })
         }).catch(messageBox.handleError);
 
     messageBox.showInfo('Event deleted!');

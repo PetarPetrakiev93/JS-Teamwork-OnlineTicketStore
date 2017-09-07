@@ -16,10 +16,15 @@ const ticketsManager = (() => {
         return requester.update('appdata', `Tickets/${id}`, ticket);
     }
 
+    function deleteTicket(ticketId) {
+        return requester.remove('appdata', `Tickets/${ticketId}`);
+    }
+
     return {
         createTicket,
         getTicketsForEvent,
         updateTicket,
-        editTicket
+        editTicket,
+        deleteTicket
     }
 })();

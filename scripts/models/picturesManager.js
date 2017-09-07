@@ -17,10 +17,15 @@ const picturesManager = (() => {
         return requester.update('appdata', `Pictures/${id}`, picture);
     }
 
+    function deletePicture(pictureId) {
+        return requester.remove('appdata', `Pictures/${pictureId}`);
+    }
+
     return {
         createPicture,
         getAllPicturesByEventId,
         getAllPictures,
-        editPicture
+        editPicture,
+        deletePicture
     }
 })();
