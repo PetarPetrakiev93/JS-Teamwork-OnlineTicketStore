@@ -39,6 +39,7 @@ userController.registerPOST =  function (ctx) {
     userManager.register(username, pass, confirmPass)
         .then(function (userInfo) {
             userManager.saveSession(userInfo);
+            userInfo.basket = [];
             ctx.redirect('#/home');
             messageBox.showInfo('Successful register!');
         }).catch(messageBox.handleError);

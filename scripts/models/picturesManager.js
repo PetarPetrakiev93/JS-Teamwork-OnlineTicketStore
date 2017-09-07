@@ -13,10 +13,14 @@ const picturesManager = (() => {
         return requester.get('appdata', 'Pictures')
 
     }
+    function editPicture(id, picture) {
+        return requester.update('appdata', `Pictures/${id}`, picture);
+    }
 
     return {
         createPicture,
         getAllPicturesByEventId,
-        getAllPictures
+        getAllPictures,
+        editPicture
     }
 })();

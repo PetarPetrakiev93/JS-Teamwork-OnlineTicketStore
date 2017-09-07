@@ -12,9 +12,14 @@ const ticketsManager = (() => {
         return requester.update('appdate', 'Tickets/:' + id, ticket);
     }
 
+    function editTicket(id, ticket) {
+        return requester.update('appdata', `Tickets/${id}`, ticket);
+    }
+
     return {
         createTicket,
         getTicketsForEvent,
-        updateTicket
+        updateTicket,
+        editTicket
     }
 })();

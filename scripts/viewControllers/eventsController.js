@@ -45,7 +45,6 @@ eventsController.createEventPOST = function (ctx) {
     let ticketPrice = ctx.params.eventTicketPrice;
     let categoryId = $('select option:selected').attr('data-catId');
 
-    console.log(date);
     let event = {
         EventName: name,
         Details: details,
@@ -142,11 +141,103 @@ eventsController.displayEventsByCategory = function (ctx) {
 
 //EDIT EVENT
 eventsController.editEventGET = function (ctx) {
-    //TODO: view for editing event
+    eventsManager.getEventDetails(eventsController.eventId)
+        .then(function (event) {
+            picturesManager.getAllPicturesByEventId(event._id)
+                .then(function (pictures) {
+                    ctx.id = sessionStorage.getItem('userId');
+                    ctx.loggedIn = userManager.isLoggedIn();
+                    ctx.username = userManager.getUsername();
+                    ctx.EventName = event.EventName;
+                    ctx.Location = event.Location;
+                    ctx.Details = event.Details;
+                    ctx.Picture = pictures[0].Picture;
+                    eventsController.eventCoverPictureId = pictures[0]._id;
+                    ctx.CDate = event.CDate.substring(0, 10);
+
+                    ticketsManager.getTicketsForEvent(event._id)
+                        .then(function (ticket) {
+                            ctx.AvailableTickets = ticket[0].AvailableTickets;
+                            ctx.TicketPrice = ticket[0].Price;
+                            eventsController.eventTicketId = ticket[0]._id;
+                            categoriesManager.getAllCategories()
+                                .then(function (categories) {
+                                    ctx.categories = categories;
+                                    ctx.loadPartials({
+                                        header: './templates/common/header.hbs',
+                                        footer: './templates/common/footer.hbs',
+                                        editEventForm: './templates/event/edit/editEventForm.hbs'
+                                    }).then(function () {
+                                        this.partial('./templates/event/edit/editEventPage.hbs');
+                                    })
+                                });
+
+                        })
+                });
+        })
 };
 
 eventsController.editEventPOST = function (ctx) {
-    //TODO: edit event
+    ctx.loggedIn = userManager.isLoggedIn();
+    ctx.username = userManager.getUsername();
+    ctx.id = sessionStorage.getItem('userId');
+    let name = ctx.params.eventName;
+    let details = ctx.params.eventDetails;
+    let dateString = ctx.params.eventDate;
+    let dateRegex = /(\d+)[\\\/.\-,](\d+)[\\\/.\-,](\d+)/;
+    let match = dateRegex.exec(dateString.toString());
+    if (name.length === 0) {
+        messageBox.showError('The event must have a title.');
+        return;
+    }
+
+    if (match === null) {
+        messageBox.showError('Invalid date format. Try dd/MM/yyy');
+        return;
+    }
+
+    let date = new Date(Number(match[3]), Number(match[2] - 1), Number(match[1]));
+
+    let location = ctx.params.eventLocation;
+    let coverPicture = ctx.params.eventCoverPicture;
+    let totalTickets = ctx.params.eventTotalTickets;
+    let ticketPrice = ctx.params.eventTicketPrice;
+    let categoryId = $('select option:selected').attr('data-catId');
+
+    let event = {
+        EventName: name,
+        Details: details,
+        CDate: date,
+        Location: location,
+        CategoryId: categoryId
+    };
+
+    eventsManager.editEvent(eventsController.eventId, event)
+        .then(function (eventInfo) {
+            ctx.redirect('#/events');
+            messageBox.showInfo(`Ad "${name}" updated!`);
+            let id = eventInfo._id;
+            let picture = {
+                EventId: id,
+                Picture: coverPicture
+            };
+            let ticket = {
+                EventId: id,
+                TotalTickets: totalTickets,
+                AvailableTickets: totalTickets,
+                Price: ticketPrice,
+                SoldTickets: 0
+            };
+
+            picturesManager.editPicture(eventsController.eventCoverPictureId, picture)
+                .then(function (pic) {
+                    ticketsManager.editTicket(eventsController.eventTicketId, ticket)
+                        .then(function (tick) {
+                            ctx.redirect('#/events');
+                            messageBox.showInfo(`Event "${name}" created!`);
+                        })
+                });
+        }).catch(messageBox.handleError);
 };
 
 //VIEW EVENT DETAILS
@@ -155,6 +246,8 @@ eventsController.eventDetailsGET = function (ctx) {
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
+    eventsController.eventId = eventId;
+    console.log(eventsController.eventId);
 
     picturesManager.getAllPicturesByEventId(eventId)
         .then(function (picture) {
@@ -192,8 +285,9 @@ eventsController.eventDetailsGET = function (ctx) {
 
 //DELETE EVENT
 eventsController.deleteEvent = function (ctx) {
-    eventsController.advertisementId = ctx.params.id.substring(1);
-    eventsManager.deleteEvent(eventsController.advertisementId)
+    //eventsController.eventId = ctx.params.id.substring(1);
+    console.log(eventsController.eventId);
+    eventsManager.deleteEvent(eventsController.eventId)
         .then(function () {
             ctx.redirect('#/events');
         }).catch(messageBox.handleError);
@@ -204,10 +298,10 @@ eventsController.deleteEvent = function (ctx) {
 
 //ORDER TICKETS
 eventsController.orderTickets = function (ctx) {
-    if(Number(ctx.params.buyTickets) <= 0 || Number(ctx.params.buyTickets) > ctx.params.availableTickets){
+    if (Number(ctx.params.buyTickets) <= 0 || Number(ctx.params.buyTickets) > ctx.params.availableTickets) {
         messageBox.showError('Tickets not available!');
-        ctx.redirect('#/events/:'+ctx.params.EventId);
-    }else {
+        ctx.redirect('#/events/:' + ctx.params.EventId);
+    } else {
         let order = {};
         order.id = ctx.params.id.substr(1);
         order.price = ctx.params.price;

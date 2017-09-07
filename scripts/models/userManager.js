@@ -19,6 +19,7 @@ const userManager = (() => {
     }
 
     function register(username, password, confirmPassword) {
+        let basket = [];
         if (username.length === 0) {
             messageBox.showError('Username cannot be empty!');
             return;
@@ -34,7 +35,7 @@ const userManager = (() => {
             return;
         }
 
-            return requester.post('user', '', {username, password}, 'basic');
+            return requester.post('user', '', {username, password, basket}, 'basic');
 
     }
 
@@ -51,7 +52,7 @@ const userManager = (() => {
 
         let userData = {
             username,
-            password
+            password,
         };
 
         return requester.post('user', 'login', userData, 'basic')

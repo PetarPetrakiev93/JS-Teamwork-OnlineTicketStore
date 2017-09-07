@@ -11,4 +11,8 @@
     <div class="panel-footer">Location: {{Location}}</div>
 </div>
 {{> tickets}}
+<div>
+    <a href="#/events/edit/:{{_id}}"><button class="btn btn-primary" id="btnEdit">Edit</button></a>
+    <a href="#/events/delete/:{{_id}}" ><button class="btn btn-danger" id="btnDelete">Delete</button></a>
+</div>
 {{> footer}}

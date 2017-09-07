@@ -17,7 +17,7 @@ const eventsManager = (() => {
     }
 
     function deleteEvent(eventId) {
-        return requester.remove('appdata', `events/${eventId}`);
+        return requester.remove('appdata', `Events/${eventId}`);
     }
 
     function getEventsByCategory(category) {
