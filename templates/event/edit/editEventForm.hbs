@@ -40,13 +40,13 @@
                     </div>
                     <div class="form-group">
                         <label for="eventCoverPicture">Event cover photo:</label>
-                        <input class="form-control" name="eventCoverPicture" value="{{CoverPicture}}"
+                        <input class="form-control" name="editEventCoverPicture" value="{{CoverPicture}}"
                                id="createEventPhoto" required/>
                     </div>
                     <div class="form-group" id="editMorePhotosDiv">
                         <label>Event photos:</label>
                         {{#each photos}}
-                           <input class="form-control" value="{{this}}" id="createEventPhoto" required/>
+                           <input class="form-control" value="{{this}}" id="createEventPhoto"/>
                         {{/each}}
 
                         <label id="editMorePhotos">Add more: &#8628;</label>

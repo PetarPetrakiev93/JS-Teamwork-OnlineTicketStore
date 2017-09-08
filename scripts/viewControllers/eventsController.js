@@ -124,6 +124,7 @@ eventsController.displayEvents = function (ctx) {
                         } else {
                             event.CoverPicture = '';
                         }
+                        console.log(event.CoverPicture);
                     }
                     ctx.loadPartials({
                         header: './templates/common/header.hbs',
@@ -229,7 +230,7 @@ eventsController.editEventPOST = function (ctx) {
     let date = new Date(Number(match[3]), Number(match[2] - 1), Number(match[1]));
 
     let location = ctx.params.eventLocation;
-    let coverPicture = ctx.params.eventCoverPicture;
+    let coverPicture = ctx.params.editEventCoverPicture;
     let totalTickets = ctx.params.eventTotalTickets;
     let ticketPrice = ctx.params.eventTicketPrice;
     let categoryId = $('select option:selected').attr('data-catId');
@@ -256,9 +257,6 @@ eventsController.editEventPOST = function (ctx) {
 
     eventsManager.editEvent(eventsController.eventId, event)
         .then(function (eventInfo) {
-            ctx.redirect('#/events');
-            messageBox.showInfo(`Event "${name}" edited!`);
-
             let id = eventInfo._id;
             let picture = {
                 EventId: id,
@@ -275,7 +273,11 @@ eventsController.editEventPOST = function (ctx) {
 
             picturesManager.editPicture(eventsController.eventCoverPictureId, picture)
                 .then(function (pic) {
-                    ticketsManager.editTicket(eventsController.eventTicketId, ticket);
+                    ticketsManager.editTicket(eventsController.eventTicketId, ticket)
+                        .then(function () {
+                            ctx.redirect('#/events');
+                            messageBox.showInfo(`Event "${name}" edited!`);
+                        })
                 });
         }).catch(messageBox.handleError);
 };
