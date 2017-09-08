@@ -11,6 +11,8 @@
             <ul>
                 {{#each orders}}
                     <li>{{> order}}</li>
+                {{else}}
+                    <li>You don't have any purchases!</li>
                 {{/each}}
 
             </ul>

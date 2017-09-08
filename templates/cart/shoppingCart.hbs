@@ -2,6 +2,8 @@
     <div class="panel panel-primary details">
     {{#each orders}}
         {{> order}}
+    {{else}}
+        <h2>You don't have any orders!</h2>
     {{/each}}
     </div>
     <div class="order panel-footer">Total price: {{totalPrice}}</div>

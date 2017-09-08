@@ -36,35 +36,39 @@ cartController.getOrders = function (ctx) {
 
                         });
                         $('button.checkout').click(function () {
-                            let order = {Order:user.basket};
-                            let notAvailableTickets = false;
-                            for(let o of user.basket){
-                                if(notAvailableTickets === false){
-                                    requester.get('appdata', 'Tickets/' + o.id)
-                                        .then(function (tickets) {
-                                            if(Number(tickets.AvailableTickets) < Number(o.numberTickets)){
-                                                notAvailableTickets = true;
-                                                messageBox.showError(`No available tickets for ${o.eventName}`);
-                                            }else{
-                                                let availableTickets = Number(tickets.AvailableTickets) - Number(o.numberTickets);
-                                                tickets.AvailableTickets = availableTickets;
-                                                tickets.SoldTickets = (Number(tickets.SoldTickets) + Number(o.numberTickets));
-                                                requester.update('appdata', 'Tickets/' + o.id, tickets);
-                                            }
+                            if(user.basket.length > 0) {
+
+
+                                let order = {Order: user.basket};
+                                let notAvailableTickets = false;
+                                for (let o of user.basket) {
+                                    if (notAvailableTickets === false) {
+                                        requester.get('appdata', 'Tickets/' + o.id)
+                                            .then(function (tickets) {
+                                                if (Number(tickets.AvailableTickets) < Number(o.numberTickets)) {
+                                                    notAvailableTickets = true;
+                                                    messageBox.showError(`No available tickets for ${o.eventName}`);
+                                                } else {
+                                                    let availableTickets = Number(tickets.AvailableTickets) - Number(o.numberTickets);
+                                                    tickets.AvailableTickets = availableTickets;
+                                                    tickets.SoldTickets = (Number(tickets.SoldTickets) + Number(o.numberTickets));
+                                                    requester.update('appdata', 'Tickets/' + o.id, tickets);
+                                                }
+                                            })
+                                    }
+
+                                }
+                                if (notAvailableTickets === false) {
+                                    requester.post('appdata', 'Orders', order)
+                                        .then(function () {
+                                            user.basket = [];
+                                            requester.update('user', sessionStorage.getItem('userId'), user)
+                                                .then(function () {
+                                                    messageBox.showInfo(`Total payment: ${totalPrice}`);
+                                                    ctx.redirect('#/events');
+                                                })
                                         })
                                 }
-
-                            }
-                            if(notAvailableTickets === false){
-                                requester.post('appdata', 'Orders', order)
-                                    .then(function () {
-                                        user.basket = [];
-                                        requester.update('user', sessionStorage.getItem('userId'), user)
-                                            .then(function () {
-                                                messageBox.showInfo(`Total payment: ${totalPrice}`);
-                                                ctx.redirect('#/events');
-                                            })
-                                    })
                             }
                         });
                     })
