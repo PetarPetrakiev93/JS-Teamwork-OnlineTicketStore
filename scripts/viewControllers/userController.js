@@ -59,30 +59,30 @@ userController.logout = function (ctx) {
 
 userController.userDetails = function (ctx) {
     ctx.username = sessionStorage.getItem('username');
-    ctx.isAdmin = sessionStorage.getItem('isAdmin');
+    //ctx.isAdmin = sessionStorage.getItem('isAdmin');
     ctx.loggedIn = userManager.isLoggedIn();
-    ctx.loadPartials({
-        header: './templates/common/header.hbs',
-        footer: './templates/common/footer.hbs'
-    }).then(function () {
-        this.partial('./templates/userDetails/userDetails.hbs').then(function(){
-            //console.log($('button.admin-control'));
-            $('button.admin-control').click(function () {
-                if($($('div.admin-control-content')[0]).attr('style') === 'display: none;'){
-                    $($('div.admin-control-content')[0]).show();
-                }else{
-                    $($('div.admin-control-content')[0]).hide();
-                }
-            });
-            $('button.history').click(function () {
-                if($($('div.history-content')[0]).attr('style') === 'display: none;'){
-                    $($('div.history-content')[0]).show();
-                }else{
-                    $($('div.history-content')[0]).hide();
-                }
+    requester.get('appdata', 'Orders/?query={"_acl.creator":"' + sessionStorage.getItem('userId')+'"}')
+        .then(function (orders) {
+            for(let order of orders){
+                order.date = order._kmd.lmt.substr(0,10);
+            }
+            ctx.orders = orders;
+            ctx.loadPartials({
+                header: './templates/common/header.hbs',
+                footer: './templates/common/footer.hbs',
+                order: './templates/userDetails/order.hbs'
+            }).then(function () {
+                this.partial('./templates/userDetails/userDetails.hbs').then(function(){
+
+                    $('button.history').click(function () {
+                        if($($('div.history-content')[0]).attr('style') === 'display: none;'){
+                            $($('div.history-content')[0]).show();
+                        }else{
+                            $($('div.history-content')[0]).hide();
+                        }
+                    });
+                });
             });
         });
-    });
-
 };
 

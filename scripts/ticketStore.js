@@ -7,6 +7,7 @@ function startApp() {
 
         this.use('Handlebars', 'hbs');
 
+
         //HOME
         this.get('index.html', homeController.displayHome);
         this.get('#/home', homeController.displayHome);

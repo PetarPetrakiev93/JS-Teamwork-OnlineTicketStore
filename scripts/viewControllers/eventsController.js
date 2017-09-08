@@ -247,7 +247,6 @@ eventsController.eventDetailsGET = function (ctx) {
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
     eventsController.eventId = eventId;
-    console.log(eventsController.eventId);
 
     picturesManager.getAllPicturesByEventId(eventId)
         .then(function (picture) {
