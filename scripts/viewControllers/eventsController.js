@@ -55,7 +55,6 @@ eventsController.createEventPOST = function (ctx) {
     let morePhotos = $('#morePhotosDiv input');
 
 
-    let pictures = [];
 
     let event = {
         EventName: name,
@@ -64,6 +63,8 @@ eventsController.createEventPOST = function (ctx) {
         Location: location,
         CategoryId: categoryId
     };
+    let pictures = [];
+
     if(morePhotos.length > 0){
         for (let photo of morePhotos) {
             if(photo.value){
@@ -71,9 +72,6 @@ eventsController.createEventPOST = function (ctx) {
             }
         }
     }
-
-    console.log(pictures);
-
     eventsManager.createEvent(event)
         .then(function (eventInfo) {
             let id = eventInfo._id;
@@ -119,7 +117,8 @@ eventsController.displayEvents = function (ctx) {
                         eventId = event._id;
                         let eventPictures = pictures.filter(a => a.EventId === eventId);
                         pictures = pictures.filter(a => a.EventId !== eventId);
-                        event.CDate = event.CDate.substring(0, 10);
+                        let date = event.CDate.substring(0, 10).split('-');
+                        event.CDate = `${date[2]}/${date[1]}/${date[0]}`;
                         if (eventPictures[0]) {
                             event.CoverPicture = eventPictures[0].CoverPicture;
                         } else {
@@ -174,14 +173,14 @@ eventsController.editEventGET = function (ctx) {
                     ctx.EventName = event.EventName;
                     ctx.Location = event.Location;
                     ctx.Details = event.Details;
-                    ctx.Picture = pictures[0].Picture;
+                    ctx.CoverPicture = pictures[0].CoverPicture;
                     eventsController.eventCoverPictureId = pictures[0]._id;
-                    ctx.CDate = event.CDate.substring(0, 10);
-
+                    let date = event.CDate.substring(0, 10).split('-');
+                    ctx.CDate = `${date[2]}/${date[1]}/${date[0]}`;
+                    ctx.photos = pictures[0].Pictures;
                     ticketsManager.getTicketsForEvent(event._id)
                         .then(function (ticket) {
                             ctx.AvailableTickets = ticket[0].AvailableTickets;
-                            console.log(ctx.AvailableTickets);
                             ctx.TicketPrice = ticket[0].Price;
                             eventsController.eventTicketId = ticket[0]._id;
                             categoriesManager.getAllCategories()
@@ -192,7 +191,14 @@ eventsController.editEventGET = function (ctx) {
                                         footer: './templates/common/footer.hbs',
                                         editEventForm: './templates/event/edit/editEventForm.hbs'
                                     }).then(function () {
-                                        this.partial('./templates/event/edit/editEventPage.hbs');
+                                        this.partial('./templates/event/edit/editEventPage.hbs').then(function () {
+                                            let morePhotosLabel = $('#editMorePhotos');
+                                            let morePhotosDiv = $('#editMorePhotosDiv');
+                                            morePhotosLabel.click(function () {
+                                                let input = $('<input class="form-control" placeholder="Enter picture url..."/>');
+                                                input.appendTo(morePhotosDiv);
+                                            });
+                                        });
                                     })
                                 });
 
@@ -236,14 +242,28 @@ eventsController.editEventPOST = function (ctx) {
         CategoryId: categoryId
     };
 
+    let morePhotos = $('#editMorePhotosDiv input');
+
+    let pictures = [];
+
+    if(morePhotos.length > 0){
+        for (let photo of morePhotos) {
+            if(photo.value){
+                pictures.push(photo.value);
+            }
+        }
+    }
+
     eventsManager.editEvent(eventsController.eventId, event)
         .then(function (eventInfo) {
             ctx.redirect('#/events');
-            messageBox.showInfo(`Ad "${name}" updated!`);
+            messageBox.showInfo(`Event "${name}" edited!`);
+
             let id = eventInfo._id;
             let picture = {
                 EventId: id,
-                Picture: coverPicture
+                CoverPicture: coverPicture,
+                Pictures: pictures
             };
             let ticket = {
                 EventId: id,
@@ -255,11 +275,7 @@ eventsController.editEventPOST = function (ctx) {
 
             picturesManager.editPicture(eventsController.eventCoverPictureId, picture)
                 .then(function (pic) {
-                    ticketsManager.editTicket(eventsController.eventTicketId, ticket)
-                        .then(function (tick) {
-                            ctx.redirect('#/events');
-                            messageBox.showInfo(`Event "${name}" created!`);
-                        })
+                    ticketsManager.editTicket(eventsController.eventTicketId, ticket);
                 });
         }).catch(messageBox.handleError);
 };
@@ -276,7 +292,8 @@ eventsController.eventDetailsGET = function (ctx) {
         .then(function (picture) {
             eventsManager.getEventDetails(eventId)
                 .then(function (event) {
-                    ctx.CDate = event.CDate.substring(0, 10);
+                    let date = event.CDate.substring(0, 10).split('-');
+                    ctx.CDate = `${date[2]}/${date[1]}/${date[0]}`;
                     ctx.Location = event.Location;
                     ctx.Details = event.Details;
                     ctx.EventName = event.EventName;
@@ -288,7 +305,7 @@ eventsController.eventDetailsGET = function (ctx) {
                     } else {
                         ctx.CoverPicture = '';
                     }
-                    console.log(eventPhotos);
+
                     ticketsManager.getTicketsForEvent(eventId)
                         .then(function (tickets) {
                             ctx._id = tickets[0]._id;

@@ -2,23 +2,23 @@
     <div class="row">
         <div class="col-lg-offset-4 col-lg-4">
             <div class="page-header">
-                <h1 class="text-center">Create event</h1>
+                <h1 class="text-center">Edit event</h1>
             </div>
             <form class="form-horizontal" action="#/events/edit/:{{_id}}" method="post">
                 <fieldset>
                     <div class="form-group">
                         <label for="createEventName">Event name:</label>
-                        <input type="text" class="form-control" name="eventName" placeholder="{{EventName}}"
+                        <input type="text" class="form-control" name="eventName" value="{{EventName}}"
                                id="createEventName">
                     </div>
                     <div class="form-group">
                         <label for="createEventDate">Event date:</label>
                         <input type="text" class="form-control" name="eventDate"
-                               placeholder="{{CDate}}" id="createEventDate">
+                               value="{{CDate}}" id="createEventDate">
                     </div>
                     <div class="form-group">
                         <label for="createEventLocation">Event location:</label>
-                        <input type="text" class="form-control" name="eventLocation" placeholder="{{Location}}"
+                        <input type="text" class="form-control" name="eventLocation" value="{{Location}}"
                                id="createEventLocation">
                     </div>
                     <div class="form-group">
@@ -29,22 +29,34 @@
 
                     <div class="form-group">
                         <label for="createEventTotalTickets">Event total tickets:</label>
-                        <input type="number"  class="form-control" name="eventTotalTickets" placeholder="{{AvailableTickets}}"
+                        <input type="number" class="form-control" name="eventTotalTickets"
+                               value="{{AvailableTickets}}"
                                id="createEventTotalTickets"/>
                     </div>
                     <div class="form-group">
                         <label for="createEventTicketsPrice">Event ticket price:</label>
-                        <input type="number" class="form-control" name="eventTicketPrice" placeholder="{{TicketPrice}}"
+                        <input type="number" class="form-control" name="eventTicketPrice" value="{{TicketPrice}}"
                                id="createEventTicketsPrice"/>
                     </div>
                     <div class="form-group">
-                        <label for="createEventPhoto">Event cover photo:</label>
-                        <input class="form-control" name="eventCoverPicture" placeholder="{{Picture}}"
+                        <label for="eventCoverPicture">Event cover photo:</label>
+                        <input class="form-control" name="eventCoverPicture" value="{{CoverPicture}}"
                                id="createEventPhoto" required/>
+                    </div>
+                    <div class="form-group" id="editMorePhotosDiv">
+                        <label>Event photos:</label>
+                        {{#each photos}}
+                           <input class="form-control" value="{{this}}" id="createEventPhoto" required/>
+                        {{/each}}
+
+                        <label id="editMorePhotos">Add more: &#8628;</label>
+                        <!--<input class="form-control" placeholder="Enter picture url..."/>-->
+
                     </div>
                     <div class=" form-group">
                         <div class="dropdown">
-                            <label class="dropdown-toggle" data-toggle="dropdown" for="createEventCategory">Choose category: </label>
+                            <label class="dropdown-toggle" data-toggle="dropdown" for="createEventCategory">Choose
+                                category: </label>
 
                             <div>
                                 <select>
@@ -58,7 +70,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <a href="#/events"><button type="button" class="btn btn-primary">Cancel</button></a>
+                        <a href="#/events">
+                            <button type="button" class="btn btn-primary">Cancel</button>
+                        </a>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </fieldset>
