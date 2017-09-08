@@ -294,20 +294,36 @@ eventsController.eventDetailsGET = function (ctx) {
         .then(function (picture) {
             eventsManager.getEventDetails(eventId)
                 .then(function (event) {
-                    let date = event.CDate.substring(0, 10).split('-');
-                    ctx.CDate = `${date[2]}/${date[1]}/${date[0]}`;
+                    ctx.CDate = event.CDate.substring(0, 10);
                     ctx.Location = event.Location;
                     ctx.Details = event.Details;
                     ctx.EventName = event.EventName;
                     let eventPhotos;
                     if (picture[0]) {
                         ctx.CoverPicture = picture[0].CoverPicture;
-                        eventPhotos = picture[0].Pictures
-
+                        eventPhotos = picture[0].Pictures;
+                        ctx.photos = [];
+                        let index = 0;
+                        for(let photo in eventPhotos){
+                            if(index === 0){
+                                ctx.photos.push({
+                                    firstPhoto: true,
+                                    imageUrl: eventPhotos[photo]
+                                })
+                            }else{
+                                ctx.photos.push({
+                                    imageUrl: eventPhotos[photo]
+                                })
+                            }
+                            index++;
+                        }
                     } else {
                         ctx.CoverPicture = '';
                     }
-
+                    if(eventPhotos.length !== 0){
+                        ctx.hasEventPhotos = true;
+                    }
+                    //console.log(ctx.photos);
                     ticketsManager.getTicketsForEvent(eventId)
                         .then(function (tickets) {
                             ctx._id = tickets[0]._id;
