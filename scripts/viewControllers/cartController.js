@@ -2,6 +2,7 @@ const cartController = {};
 
 //GET ALL ORDERS
 cartController.getOrders = function (ctx) {
+    ctx.isAdmin = userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');

@@ -1,0 +1,11 @@
+<div>
+    <span>Order: {{@index}}</span>
+    <span>Date of order: {{date}}</span><br>
+    <span>
+        {{#each Order}}
+            <span>User id: <a>{{id}}</a></span>
+            <span>Event name: <a>{{eventName}}</a></span>
+            <span>Number of tickets: <a>{{numberTickets}}</a></span><br>
+        {{/each}}
+    </span>
+</div>

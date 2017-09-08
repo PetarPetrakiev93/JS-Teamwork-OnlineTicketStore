@@ -11,6 +11,7 @@ function startApp() {
         //HOME
         this.get('index.html', homeController.displayHome);
         this.get('#/home', homeController.displayHome);
+        this.get('#', homeController.displayHome);
 
         //REGISTER
         this.get('#/register', userController.registerGET);
@@ -53,6 +54,10 @@ function startApp() {
 
         //CART
         this.get('#/cart', cartController.getOrders);
+
+        this.get('#/admin', adminController.getAdmin);
+
+        this.post('#/admin/update', adminController.updateAdmins)
 
     });
     app.run();

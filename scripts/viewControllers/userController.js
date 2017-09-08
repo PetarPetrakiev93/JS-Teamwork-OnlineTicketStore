@@ -16,8 +16,17 @@ userController.loginPOST = function (ctx) {
     userManager.login(username, password)
         .then(function (userInfo) {
             userManager.saveSession(userInfo);
-            ctx.redirect('#/home');
-            messageBox.showInfo('Successful login!');
+            requester.get('group', '').then(function (admins) {
+                for(let admin of admins[0].users.list){
+                    if(admin._id ===  sessionStorage.getItem('userId')){
+                        ctx.isAdmin = true;
+                    }
+                }
+                messageBox.showInfo('Successful login!');
+                ctx.redirect('#');
+            });
+
+
         }).catch(messageBox.handleError);
 };
 
@@ -40,8 +49,15 @@ userController.registerPOST =  function (ctx) {
         .then(function (userInfo) {
             userManager.saveSession(userInfo);
             userInfo.basket = [];
-            ctx.redirect('#/home');
-            messageBox.showInfo('Successful register!');
+            requester.get('group', '').then(function (admins) {
+                for(let admin of admins[0].users.list){
+                    if(admin._id ===  sessionStorage.getItem('userId')){
+                        ctx.isAdmin = true;
+                    }
+                }
+                messageBox.showInfo('Successful register!');
+                ctx.redirect('#');
+            });
         }).catch(messageBox.handleError);
 };
 
@@ -59,7 +75,7 @@ userController.logout = function (ctx) {
 
 userController.userDetails = function (ctx) {
     ctx.username = sessionStorage.getItem('username');
-    //ctx.isAdmin = sessionStorage.getItem('isAdmin');
+    ctx.isAdmin = userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
     requester.get('appdata', 'Orders/?query={"_acl.creator":"' + sessionStorage.getItem('userId')+'"}')
         .then(function (orders) {

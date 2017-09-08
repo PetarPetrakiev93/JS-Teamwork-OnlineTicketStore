@@ -5,6 +5,7 @@ eventsController.createEventGET = function (ctx) {
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
+    ctx.isAdmin = userManager.isAdmin();
     categoriesManager.getAllCategories()
         .then(function (categories) {
             ctx.categories = categories;
@@ -30,6 +31,7 @@ eventsController.createEventGET = function (ctx) {
 
 eventsController.createEventPOST = function (ctx) {
     //TODO: validations
+
     let name = ctx.params.eventName;
     let details = ctx.params.eventDetails;
     let dateString = ctx.params.eventDate;
@@ -103,6 +105,7 @@ eventsController.createEventPOST = function (ctx) {
 
 //SHOW EVENTS
 eventsController.displayEvents = function (ctx) {
+    ctx.isAdmin = userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
@@ -164,6 +167,7 @@ eventsController.displayEventsByCategory = function (ctx) {
 
 //EDIT EVENT
 eventsController.editEventGET = function (ctx) {
+    ctx.isAdmin = userManager.isAdmin();
     eventsManager.getEventDetails(eventsController.eventId)
         .then(function (event) {
             picturesManager.getAllPicturesByEventId(event._id)
@@ -284,6 +288,7 @@ eventsController.editEventPOST = function (ctx) {
 
 //VIEW EVENT DETAILS
 eventsController.eventDetailsGET = function (ctx) {
+    ctx.isAdmin = userManager.isAdmin();
     let eventId = ctx.params.id.substring(1);
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
@@ -294,6 +299,9 @@ eventsController.eventDetailsGET = function (ctx) {
         .then(function (picture) {
             eventsManager.getEventDetails(eventId)
                 .then(function (event) {
+                    if(event._acl.creator === sessionStorage.getItem('userId')){
+                        ctx.isCreator = true;
+                    }
                     ctx.CDate = event.CDate.substring(0, 10);
                     ctx.Location = event.Location;
                     ctx.Details = event.Details;
