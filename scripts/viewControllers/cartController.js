@@ -35,10 +35,10 @@ cartController.getOrders = function (ctx) {
                                 })
 
                         });
+                        if(user.basket.length <= 0){
+                            $('button.checkout').attr('disabled', true);
+                        }
                         $('button.checkout').click(function () {
-                            if(user.basket.length > 0) {
-
-
                                 let order = {Order: user.basket};
                                 let notAvailableTickets = false;
                                 for (let o of user.basket) {
@@ -69,7 +69,6 @@ cartController.getOrders = function (ctx) {
                                                 })
                                         })
                                 }
-                            }
                         });
                     })
             })
