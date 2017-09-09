@@ -7,7 +7,11 @@ const userManager = (() => {
     }
 
     function isLoggedIn() {
-        return sessionStorage.getItem('userId') !== null;
+        return sessionStorage.getItem('userId') !== null && sessionStorage.getItem('username') !== 'guest';
+    }
+
+    function isGuest() {
+        return sessionStorage.getItem('username') === 'guest';
     }
 
     function isAdmin() {
@@ -40,6 +44,10 @@ const userManager = (() => {
     }
 
     function login(username, password) {
+        if(isGuest()){
+            logout();
+        }
+
         if (username.length === 0) {
             messageBox.showError('Username cannot be empty!');
             return;
@@ -80,6 +88,7 @@ const userManager = (() => {
         getUsername,
         getUser,
         updateUser,
-        isAdmin
+        isAdmin,
+        isGuest
     }
 })();

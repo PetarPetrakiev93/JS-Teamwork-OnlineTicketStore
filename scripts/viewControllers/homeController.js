@@ -1,11 +1,18 @@
-const homeController = (() => {
-});
+const homeController = (() => {});
 
 homeController.displayHome = function (ctx) {
-    ctx.loggedIn = userManager.isLoggedIn();
+    let logged = userManager.isLoggedIn();
+    ctx.loggedIn = logged;
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
     ctx.isAdmin = userManager.isAdmin();
+    if(!logged) {
+        userManager.login('guest', 'guest')
+            .then(function (userInfo) {
+                userManager.saveSession(userInfo);
+            })
+            .catch(messageBox.handleError);
+    }
     ctx.loadPartials({
         header: './templates/common/header.hbs',
         footer: './templates/common/footer.hbs',
