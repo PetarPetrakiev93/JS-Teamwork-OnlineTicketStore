@@ -25,6 +25,7 @@
         <input type="text" name="price" id="price" value="{{price}}" style="display: none;"/>
     </div>
 
+    {{#if loggedIn}}
     <div class="panel-footer">
         <div>Order Tickets</div>
         <input type="text" name="EventName" value="{{EventName}}" style="display: none;">
@@ -32,6 +33,7 @@
         <input type="number" name="buyTickets" id="buyTickets"/>
         <input type="submit" value="Order"/>
     </div>
+    {{/if}}
 </form>
     </div>
     <div class="col-md-4">

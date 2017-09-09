@@ -340,6 +340,7 @@ eventsController.eventDetailsGET = function (ctx) {
                             ctx.soldTickets = tickets[0].SoldTickets;
                             ctx.price = tickets[0].Price;
                             ctx.EventId = tickets[0].EventId;
+                            ctx.loggedIn = userManager.isLoggedIn();
                             ctx.loadPartials({
                                 header: './templates/common/header.hbs',
                                 footer: './templates/common/footer.hbs',
