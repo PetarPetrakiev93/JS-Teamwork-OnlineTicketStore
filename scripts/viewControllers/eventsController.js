@@ -105,7 +105,7 @@ eventsController.createEventPOST = function (ctx) {
 
 //SHOW EVENTS
 eventsController.displayEvents = function (ctx) {
-    ctx.isAdmin = userManager.isAdmin();
+    ctx.isAdmin =  userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');

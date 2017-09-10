@@ -10,16 +10,23 @@ homeController.displayHome = function (ctx) {
         userManager.login('guest', 'guest')
             .then(function (userInfo) {
                 userManager.saveSession(userInfo);
+                ctx.loadPartials({
+                    header: './templates/common/header.hbs',
+                    footer: './templates/common/footer.hbs',
+                    carouselItem: './templates/home/carouselItem.hbs'
+                }).then(function () {
+                    this.partial('./templates/home/home.hbs');
+                })
             })
             .catch(messageBox.handleError);
     }
-    ctx.loadPartials({
-        header: './templates/common/header.hbs',
-        footer: './templates/common/footer.hbs',
-        carouselItem: './templates/home/carouselItem.hbs'
-    }).then(function () {
-        this.partial('./templates/home/home.hbs');
-    })
-
-
+    else {
+        ctx.loadPartials({
+            header: './templates/common/header.hbs',
+            footer: './templates/common/footer.hbs',
+            carouselItem: './templates/home/carouselItem.hbs'
+        }).then(function () {
+            this.partial('./templates/home/home.hbs');
+        })
+    }
 };

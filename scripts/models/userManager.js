@@ -3,11 +3,12 @@ const userManager = (() => {
         sessionStorage.setItem('authtoken', userInfo._kmd.authtoken);
         sessionStorage.setItem('username', userInfo.username);
         sessionStorage.setItem('userId', userInfo._id);
-        adminManager.isAdmins();
+        sessionStorage.setItem('isAdmin', userInfo.IsAdmin);
+        //adminManager.isAdmins();
     }
 
     function isLoggedIn() {
-        return sessionStorage.getItem('userId') !== null && sessionStorage.getItem('username') !== 'guest';
+        return sessionStorage.getItem('userId') !== null && !isGuest();
     }
 
     function isGuest() {
@@ -15,7 +16,7 @@ const userManager = (() => {
     }
 
     function isAdmin() {
-        return sessionStorage.getItem('isAdmin') && !isGuest();
+        return sessionStorage.getItem('isAdmin') === "1";
     }
 
     function getUsername() {
@@ -39,7 +40,8 @@ const userManager = (() => {
             return;
         }
 
-            return requester.post('user', '', {username, password, basket}, 'basic');
+        let IsAdmin = 0;
+            return requester.post('user', '', {username, password, basket, IsAdmin}, 'basic');
 
     }
 
@@ -67,7 +69,6 @@ const userManager = (() => {
     }
 
     function logout() {
-        sessionStorage.setItem('isAdmin', null);
        return requester.post('user', '_logout', {authtoken: sessionStorage.getItem('authtoken')});
     }
 
