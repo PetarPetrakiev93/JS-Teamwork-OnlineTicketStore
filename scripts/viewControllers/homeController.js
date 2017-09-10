@@ -6,7 +6,7 @@ homeController.displayHome = function (ctx) {
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
     ctx.isAdmin = userManager.isAdmin();
-    if(!logged) {
+    if(!logged && !userManager.isGuest()) {
         userManager.login('guest', 'guest')
             .then(function (userInfo) {
                 userManager.saveSession(userInfo);

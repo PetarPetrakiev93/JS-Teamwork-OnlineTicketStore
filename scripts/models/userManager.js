@@ -15,7 +15,7 @@ const userManager = (() => {
     }
 
     function isAdmin() {
-        return sessionStorage.getItem('isAdmin');
+        return sessionStorage.getItem('isAdmin') && !isGuest();
     }
 
     function getUsername() {
