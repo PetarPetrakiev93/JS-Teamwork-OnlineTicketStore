@@ -4,7 +4,7 @@ const userManager = (() => {
         sessionStorage.setItem('username', userInfo.username);
         sessionStorage.setItem('userId', userInfo._id);
         sessionStorage.setItem('isAdmin', userInfo.IsAdmin);
-        //adminManager.isAdmins();
+        adminManager.isAdmins();
     }
 
     function isLoggedIn() {
