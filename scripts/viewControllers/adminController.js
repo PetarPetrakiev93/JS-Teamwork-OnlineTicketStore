@@ -57,6 +57,7 @@ adminController.updateAdmins = function (ctx) {
     let newAdmins = ctx.params.user;
     let admins = {};
     admins._id ="Admin";
+    admins._acl = {gr:true, gw:true};
     admins.users = {};
     admins.users.all = false;
     admins.users.list = [];

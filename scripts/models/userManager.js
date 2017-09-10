@@ -3,7 +3,6 @@ const userManager = (() => {
         sessionStorage.setItem('authtoken', userInfo._kmd.authtoken);
         sessionStorage.setItem('username', userInfo.username);
         sessionStorage.setItem('userId', userInfo._id);
-        sessionStorage.setItem('isAdmin', userInfo.IsAdmin);
         adminManager.isAdmins();
     }
 
@@ -16,7 +15,7 @@ const userManager = (() => {
     }
 
     function isAdmin() {
-        return sessionStorage.getItem('isAdmin') === "1";
+        return sessionStorage.getItem('isAdmin');
     }
 
     function getUsername() {
