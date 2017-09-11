@@ -3,6 +3,9 @@
     margin: auto;
     min-height:200px;
 }
+.thumbnail>img, .thumbnail a>img, .carousel-inner>.item>img, .carousel-inner>.item>a>img{
+    height: 500px;
+}
 
 /* Hide the carousel text when the screen is less than 600 pixels wide */
 @media (max-width: 600px) {
