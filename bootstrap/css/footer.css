@@ -2,9 +2,13 @@ footer {
     position:absolute;
     bottom:0;
     width:100%;
-    height: 2%;
+    height: 3%;
     background-color: #2fa4e7;
     text-align: center;
+}
+
+.footer p{
+    margin: 0 0 -6px;
 }
 
 html {

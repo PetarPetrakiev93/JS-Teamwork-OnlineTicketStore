@@ -6,9 +6,138 @@
             <p>Mission, Vission &amp; Values</p>
         </div>
     </div>
+    <div class="container">
+    <div class="price-heading">
+        <div class="row">
+            <div class="col-md-0"></div>
+            <div class="col-md-4">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">PRICE</div>
+
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Under 100 BGN
+                        <div class="material-switch pull-right">
+                            <input id="someSwitchOptionDefault" name="someSwitchOption001" type="checkbox"/>
+                            <label for="someSwitchOptionDefault" class="label-default"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        100-200 BGN
+                        <div class="material-switch pull-right">
+                            <input id="someSwitchOptionPrimary" name="someSwitchOption001" type="checkbox"/>
+                            <label for="someSwitchOptionPrimary" class="label-primary"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        200-500 BGN
+                        <div class="material-switch pull-right">
+                            <input id="someSwitchOptionSuccess" name="someSwitchOption001" type="checkbox"/>
+                            <label for="someSwitchOptionSuccess" class="label-success"></label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        More than 500 BGN
+                        <div class="material-switch pull-right">
+                            <input id="someSwitchOptionInfo" name="someSwitchOption001" type="checkbox"/>
+                            <label for="someSwitchOptionInfo" class="label-info"></label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">LOCATION</div>
+
+                    <!-- List group -->
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            Sofia
+                            <div class="material-switch pull-right">
+                                <input id="one" name="one" type="checkbox"/>
+                                <label for="one" class="label-default"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            Burgas
+                            <div class="material-switch pull-right">
+                                <input id="two" name="two" type="checkbox"/>
+                                <label for="two" class="label-primary"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            Vancouver
+                            <div class="material-switch pull-right">
+                                <input id="three" name="three" type="checkbox"/>
+                                <label for="three" class="label-success"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            Plovdiv
+                            <div class="material-switch pull-right">
+                                <input id="four" name="four" type="checkbox"/>
+                                <label for="four" class="label-info"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">CATEGORY</div>
+
+                    <!-- List group -->
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            category 1
+                            <div class="material-switch pull-right">
+                                <input id="1" name="1" type="checkbox"/>
+                                <label for="1" class="label-default"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            category 2
+                            <div class="material-switch pull-right">
+                                <input id="2" name="2" type="checkbox"/>
+                                <label for="2" class="label-primary"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            category 3
+                            <div class="material-switch pull-right">
+                                <input id="3" name="3" type="checkbox"/>
+                                <label for="3" class="label-success"></label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            category 4
+                            <div class="material-switch pull-right">
+                                <input id="4" name="4" type="checkbox"/>
+                                <label for="4" class="label-info"></label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
 
     <div class="container">
+
         <div class="row">
+
             {{#each events}}
                 {{> eventBox}}
             {{else}}
