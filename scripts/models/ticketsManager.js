@@ -4,6 +4,11 @@ const ticketsManager = (() => {
 
     }
 
+    function getAllTickets() {
+        return requester.get('appdata', 'Tickets');
+
+    }
+
     function getTicketsForEvent(id) {
         return requester.get('appdata', 'Tickets/?query={"EventId":"'+ id + '"}');
     }
@@ -25,6 +30,7 @@ const ticketsManager = (() => {
         getTicketsForEvent,
         updateTicket,
         editTicket,
-        deleteTicket
+        deleteTicket,
+        getAllTickets
     }
 })();

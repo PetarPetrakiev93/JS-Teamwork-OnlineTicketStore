@@ -28,81 +28,76 @@ eventsController.createEventGET = function (ctx) {
         .catch(messageBox.handleError);
 
 };
-
-eventsController.createEventPOST = function (ctx) {
-    //TODO: validations
-
-    let date = undefined;
-    /*
+/*
     returns false if the date is invalid
     returns Date if it is valid
      */
-    function isDateValid(dateString) {
-        let dateRegex = /(\d+)[\\\/.\-,](\d+)[\\\/.\-,](\d+)/;
-        let match = dateRegex.exec(dateString.toString());
+eventsController.isDateValid = function(dateString) {
+    let dateRegex = /(\d+)[\\\/.\-,](\d+)[\\\/.\-,](\d+)/;
+    let match = dateRegex.exec(dateString.toString());
 
-        if (match === null) {
-            messageBox.showError('Invalid date format. Try dd/MM/yyy');
-            return false;
-        }
-
-        let year =Number(match[3]);
-        let month = Number(match[2]);
-        let day = Number(match[1]);
-
-        // Check the ranges of month and year
-        if(year < 0){
-            messageBox.showError('Invalid year!');
-            return false;
-        }
-        if(month === 0 || month > 12) {
-            messageBox.showError('Invalid year!');
-            return false;
-        }
-
-        let monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-
-        // Adjust for leap years
-        if(((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
-        {
-            monthLength[1] = 29;
-        }
-
-
-        // Check the range of the day
-        if(day <= 0){
-            messageBox.showError('Invalid day!');
-            return false;
-        }
-
-        if(day > monthLength[month - 1]){
-            messageBox.showError('Invalid day!');
-            return false;
-        }
-        date = new Date(Number(year), Number(month - 1), Number(day));
-
-        let now = Date.now();
-
-        if(now >= date.getTime()){
-            messageBox.showError('The date must be in the future!');
-            return false;
-        }
-
-        return date;
+    if (match === null) {
+        messageBox.showError('Invalid date format. Try dd/MM/yyy');
+        return false;
     }
 
+    let year =Number(match[3]);
+    let month = Number(match[2]);
+    let day = Number(match[1]);
+
+    // Check the ranges of month and year
+    if(year < 0){
+        messageBox.showError('Invalid year!');
+        return false;
+    }
+    if(month === 0 || month > 12) {
+        messageBox.showError('Invalid month!');
+        return false;
+    }
+
+    let monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+    // Adjust for leap years
+    if(((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
+    {
+        monthLength[1] = 29;
+    }
+
+
+    // Check the range of the day
+    if(day <= 0){
+        messageBox.showError('Invalid day!');
+        return false;
+    }
+
+    if(day > monthLength[month - 1]){
+        messageBox.showError('Invalid day!');
+        return false;
+    }
+    let date = new Date(Number(year), Number(month - 1), Number(day));
+
+    let now = Date.now();
+
+    if(now >= date.getTime()){
+        messageBox.showError('The date must be in the future!');
+        return false;
+    }
+
+    return date;
+};
+eventsController.createEventPOST = function (ctx) {
     let name = ctx.params.eventName;
     let details = ctx.params.eventDetails;
     let dateString = ctx.params.eventDate;
 
-    let validDate = isDateValid(dateString);
+    let date = eventsController.isDateValid(dateString);
 
     if (name.length === 0) {
         messageBox.showError('The event must have a title.');
         return;
     }
 
-    if(!validDate){
+    if(!date){
         return;
     }
 
@@ -184,7 +179,6 @@ eventsController.displayEvents = function (ctx) {
                         } else {
                             event.CoverPicture = '';
                         }
-                        console.log(event.CoverPicture);
                     }
                     ctx.loadPartials({
                         header: './templates/common/header.hbs',
@@ -276,19 +270,17 @@ eventsController.editEventPOST = function (ctx) {
     let name = ctx.params.eventName;
     let details = ctx.params.eventDetails;
     let dateString = ctx.params.eventDate;
-    let dateRegex = /(\d+)[\\\/.\-,](\d+)[\\\/.\-,](\d+)/;
-    let match = dateRegex.exec(dateString.toString());
+    let date = eventsController.isDateValid(dateString);
+
     if (name.length === 0) {
         messageBox.showError('The event must have a title.');
         return;
     }
 
-    if (match === null) {
-        messageBox.showError('Invalid date format. Try dd/MM/yyy');
+    if(!date){
         return;
     }
 
-    let date = new Date(Number(match[3]), Number(match[2] - 1), Number(match[1]));
 
     let location = ctx.params.eventLocation;
     let coverPicture = ctx.params.editEventCoverPicture;
@@ -388,7 +380,6 @@ eventsController.eventDetailsGET = function (ctx) {
                     if(eventPhotos.length !== 0){
                         ctx.hasEventPhotos = true;
                     }
-                    //console.log(ctx.photos);
                     ticketsManager.getTicketsForEvent(eventId)
                         .then(function (tickets) {
                             ctx._id = tickets[0]._id;
@@ -414,7 +405,7 @@ eventsController.eventDetailsGET = function (ctx) {
 //DELETE EVENT
 eventsController.deleteEvent = function (ctx) {
     //eventsController.eventId = ctx.params.id.substring(1);
-    console.log(eventsController.eventId);
+
     eventsManager.deleteEvent(eventsController.eventId)
         .then(function () {
             ctx.redirect('#/events');

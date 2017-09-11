@@ -1,7 +1,17 @@
-<div class="item">
-    <img src="{{imageUrl}}" class="img-responsive center-block" alt="{{imageAlt}}">
-    <div class="carousel-caption">
-        <h3>{{imageCaption}}</h3>
-        <p>{{imageDetails}}</p>
+{{#if active}}
+    <div class="item active clickable" id="{{_id}}">
+        <img src="{{imageUrl}}" class="img-responsive center-block" alt="{{imageAlt}}">
+        <div class="carousel-caption">
+            <h3>{{EventName}}</h3>
+            <p>{{Location}}</p>
+        </div>
     </div>
-</div>
+{{else}}
+    <div class="item clickable" id="{{_id}}">
+        <img src="{{imageUrl}}" class="img-responsive center-block" alt="{{imageAlt}}">
+        <div class="carousel-caption">
+            <h3>{{EventName}}</h3>
+            <p>{{Location}}</p>
+        </div>
+    </div>
+{{/if}}
