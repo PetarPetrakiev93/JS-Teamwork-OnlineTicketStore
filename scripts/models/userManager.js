@@ -40,12 +40,12 @@ const userManager = (() => {
         }
 
         let IsAdmin = 0;
-            return requester.post('user', '', {username, password, basket, IsAdmin}, 'basic');
+        return requester.post('user', '', {username, password, basket, IsAdmin}, 'basic');
 
     }
 
     function login(username, password) {
-        if(isGuest()){
+        if (isGuest()) {
             logout();
         }
 
@@ -68,7 +68,7 @@ const userManager = (() => {
     }
 
     function logout() {
-       return requester.post('user', '_logout', {authtoken: sessionStorage.getItem('authtoken')});
+        return requester.post('user', '_logout', {authtoken: sessionStorage.getItem('authtoken')});
     }
 
     function getUser(id) {

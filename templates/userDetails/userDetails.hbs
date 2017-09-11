@@ -1,10 +1,11 @@
 {{> header}}
-<h1 align="center">User Info</h1>
-<h2 align="center">{{username}}</h2>
+<h1 align="center">User Info:</h1>
+<h2 align="center">Username: {{username}}</h2>
 
 {{#if loggedIn}}
     <div class="history">
         <button class="history btn btn-info">Show History</button>
+        <a href="#/user/edit"><button class="btn btn-default">Edit Profile</button></a>
     </div>
     <div class="history">
         <div class="history-content" style="display: none;">

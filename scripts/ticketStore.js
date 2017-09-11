@@ -24,6 +24,10 @@ function startApp() {
         //USER DETAILS
         this.get('#/userDetails', userController.userDetails);
 
+        //USER EDIT
+        this.get('#/user/edit', userController.editUserGET);
+        this.post('#/user/edit', userController.editUserPOST);
+
         //LOGOUT
         this.get('#/logout', userController.logout);
 
@@ -55,8 +59,8 @@ function startApp() {
         //CART
         this.get('#/cart', cartController.getOrders);
 
+        //ADMIN
         this.get('#/admin', adminController.getAdmin);
-
         this.post('#/admin/update', adminController.updateAdmins)
 
     });

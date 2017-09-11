@@ -189,7 +189,8 @@ eventsController.displayEvents = function (ctx) {
                             $('.clickable').click(function () {
                                 let id = $(this).attr('id');
                                 ctx.redirect(`#/events/:${id}`);
-                            })
+                            });
+                            ctx.events = events.slice(0, 2);
                         })
 
                     })
