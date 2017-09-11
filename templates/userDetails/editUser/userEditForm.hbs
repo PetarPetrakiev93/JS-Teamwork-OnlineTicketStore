@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-4">
+            <div class="page-header">
+                <h1 class="text-center">Edit Profile</h1>
+            </div>
+            <form class="form-horizontal" action="#/user/edit"  method="post">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="usernameRegister">Username:</label>
+                        <input type="text" class="form-control" name="username" id="usernameRegister" value="{{username}}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="usernameRegister">New Username:</label>
+                        <input type="text" class="form-control" name="username" placeholder="Enter username" id="usernameRegister">
+                    </div>
+                    <button id="showPasswordField" type="button" class="btn btn-default">Change password &#8628;</button>
+                    <div id="passwordDiv" hidden>
+                        <div class="form-group">
+                            <label for="passwordRegister">New Password:</label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter password" id="passwordRegister">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordConfirmRegister">Confirm Password:</label>
+                            <input type="password" class="form-control" name="confirmPassword" placeholder="Enter password" id="passwordConfirmRegister">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
