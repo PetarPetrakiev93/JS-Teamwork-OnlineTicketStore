@@ -2,6 +2,7 @@ const searcher = (()=>{
     function itemsClicked(ctx) {
         let priceChecked = $('#prices').find("input:checked");
         let locationChecked = $('#locationss').find("input:checked");
+        let locationChecked = $('#cat').find("input:checked");
         let locationNames = [];
         for (let item of locationChecked) {
             locationNames.push(item.name);
