@@ -100,34 +100,9 @@
 
                             <!-- List group -->
                             <ul class="list-group">
-                                <li class="list-group-item">
-                                    category 1
-                                    <div class="material-switch pull-right">
-                                        <input id="1" name="1" type="checkbox"/>
-                                        <label for="1" class="label-default"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    category 2
-                                    <div class="material-switch pull-right">
-                                        <input id="2" name="2" type="checkbox"/>
-                                        <label for="2" class="label-primary"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    category 3
-                                    <div class="material-switch pull-right">
-                                        <input id="3" name="3" type="checkbox"/>
-                                        <label for="3" class="label-success"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    category 4
-                                    <div class="material-switch pull-right">
-                                        <input id="4" name="4" type="checkbox"/>
-                                        <label for="4" class="label-info"></label>
-                                    </div>
-                                </li>
+                                {{# each categories}}
+                                    {{> categoryItem}}
+                                {{/each}}
                             </ul>
                         </div>
                     </div>
