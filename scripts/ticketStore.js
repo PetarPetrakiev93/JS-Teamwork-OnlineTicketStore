@@ -40,6 +40,9 @@ function startApp() {
         //SHOW ALL EVENTS
         this.get('#/events', eventsController.displayEvents);
 
+        //SHOW EVENTS FILTERED BY PRICE
+        this.get('#/events/filtered', eventsController.displayFiltered);
+
         //SHOW EVENTS BY CATEGORY
         this.get('#/events/category/:id', eventsController.displayEventsByCategory);
 
@@ -65,4 +68,5 @@ function startApp() {
 
     });
     app.run();
+    return {app}
 }

@@ -155,6 +155,52 @@ eventsController.createEventPOST = function (ctx) {
         }).catch(messageBox.handleError)
 };
 
+eventsController.displayFiltered = function (ctx) {
+    ctx.isAdmin =  userManager.isAdmin();
+    ctx.loggedIn = userManager.isLoggedIn();
+    ctx.username = userManager.getUsername();
+    ctx.id = sessionStorage.getItem('userId');
+
+    let range = sessionStorage.getItem('ids');
+    let eventsRange = sessionStorage.getItem('evIds');
+
+    picturesManager.getPicturesInRange(range)
+        .then(function (pictures) {
+            eventsManager.getEventsInRange(eventsRange)
+                .then(function (events) {
+                    ctx.events = events.sort((a, b) => compareEventDate(a, b));
+                    let eventId;
+                    for (let event of events) {
+                        eventId = event._id;
+                        let eventPictures = pictures.filter(a => a.EventId === eventId);
+                        pictures = pictures.filter(a => a.EventId !== eventId);
+                        let date = event.CDate.substring(0, 10).split('-');
+                        event.CDate = `${date[2]}/${date[1]}/${date[0]}`;
+                        if (eventPictures[0]) {
+                            event.CoverPicture = eventPictures[0].CoverPicture;
+                        } else {
+                            event.CoverPicture = '';
+                        }
+                    }
+                    ctx.loadPartials({
+                        header: './templates/common/header.hbs',
+                        footer: './templates/common/footer.hbs',
+                        eventBox: './templates/catalog/eventBox.hbs'
+                    }).then(function () {
+                        this.partial('./templates/catalog/eventsPage.hbs').then(function () {
+                            $('.clickable').click(function () {
+                                let id = $(this).attr('id');
+                                ctx.redirect(`#/events/:${id}`);
+                            });
+                            ctx.events = events.slice(0, 2);
+                        })
+
+                    })
+                })
+        }).catch(messageBox.handleError);
+
+};
+
 //SHOW EVENTS
 eventsController.displayEvents = function (ctx) {
     ctx.isAdmin =  userManager.isAdmin();
@@ -197,16 +243,18 @@ eventsController.displayEvents = function (ctx) {
                 })
         }).catch(messageBox.handleError);
 
-    function compareEventDate(a, b) {
-        let eventAdate = new Date(a.CDate).getTime();
-        let eventBdate = new Date(b.CDate).getTime();
-        let now = Date.now();
 
-        let aTimelapse = eventAdate - now;
-        let bTimelapse = eventBdate - now;
-        return aTimelapse - bTimelapse;
-    }
 };
+
+function compareEventDate(a, b) {
+    let eventAdate = new Date(a.CDate).getTime();
+    let eventBdate = new Date(b.CDate).getTime();
+    let now = Date.now();
+
+    let aTimelapse = eventAdate - now;
+    let bTimelapse = eventBdate - now;
+    return aTimelapse - bTimelapse;
+}
 
 //SHOW EVENTS BY CATEGORY
 eventsController.displayEventsByCategory = function (ctx) {

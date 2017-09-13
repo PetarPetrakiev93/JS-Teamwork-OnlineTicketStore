@@ -8,6 +8,10 @@ const eventsManager = (() => {
         return requester.get('appdata', `Events/${id}`)
     }
 
+    function getEventsInRange(range) {
+        return requester.get('appdata', `Events?query={ "_id": { "$in": [${range} ] } }`)
+    }
+
     function editEvent(id, event) {
         return requester.update('appdata', `Events/${id}`, event);
     }
@@ -32,7 +36,8 @@ const eventsManager = (() => {
         editEvent,
         createEvent,
         deleteEvent,
-        getEventsByCategory
+        getEventsByCategory,
+        getEventsInRange
     }
 
 })();

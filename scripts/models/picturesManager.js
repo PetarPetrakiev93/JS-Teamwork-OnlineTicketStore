@@ -13,6 +13,11 @@ const picturesManager = (() => {
         return requester.get('appdata', 'Pictures')
 
     }
+
+    function getPicturesInRange(range) {
+        return requester.get('appdata', `Pictures?query={"$or":[${range}]}`);
+    }
+
     function editPicture(id, picture) {
         return requester.update('appdata', `Pictures/${id}`, picture);
     }
@@ -26,6 +31,7 @@ const picturesManager = (() => {
         getAllPicturesByEventId,
         getAllPictures,
         editPicture,
-        deletePicture
+        deletePicture,
+        getPicturesInRange
     }
 })();
