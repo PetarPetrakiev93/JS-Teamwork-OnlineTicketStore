@@ -67,6 +67,8 @@ function startApp() {
         this.post('#/admin/update', adminController.updateAdmins);
         this.post('#/createCategory', categoryController.createCategoryPOST);
 
+        this.post('#/search', eventsController.search);
+
     });
     app.run();
     return {app}

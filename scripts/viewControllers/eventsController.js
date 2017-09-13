@@ -513,3 +513,56 @@ eventsController.orderTickets = function (ctx) {
             })
     }
 };
+
+eventsController.search = function (ctx) {
+    if(ctx.params.search === ""){
+        ctx.redirect('#/home');
+        return;
+    }
+    let search = ctx.params.search;
+    ctx.isAdmin =  userManager.isAdmin();
+    ctx.loggedIn = userManager.isLoggedIn();
+    ctx.username = userManager.getUsername();
+    ctx.id = sessionStorage.getItem('userId');
+
+    picturesManager.getAllPictures()
+        .then(function (pictures) {
+            eventsManager.getEvents()
+                .then(function (events) {
+                    ctx.events = [];
+                    for(let event of events){
+                        if(event.EventName.indexOf(search) !== -1){
+                            ctx.events.push(event);
+                        }
+                    }
+                    ctx.events.sort((a, b) => compareEventDate(a, b));
+                    let eventId;
+                    for (let event of ctx.events) {
+                        eventId = event._id;
+                        let eventPictures = pictures.filter(a => a.EventId === eventId);
+                        pictures = pictures.filter(a => a.EventId !== eventId);
+                        let date = event.CDate.substring(0, 10).split('-');
+                        event.CDate = `${date[2]}/${date[1]}/${date[0]}`;
+                        if (eventPictures[0]) {
+                            event.CoverPicture = eventPictures[0].CoverPicture;
+                        } else {
+                            event.CoverPicture = '';
+                        }
+                    }
+                    ctx.loadPartials({
+                        header: './templates/common/header.hbs',
+                        footer: './templates/common/footer.hbs',
+                        eventBox: './templates/search/eventBox.hbs'
+                    }).then(function () {
+                        this.partial('./templates/search/eventsPage.hbs').then(function () {
+                            $('.clickable').click(function () {
+                                let id = $(this).attr('id');
+                                ctx.redirect(`#/events/:${id}`);
+                            });
+                            ctx.events = events.slice(0, 2);
+                        })
+
+                    })
+                })
+        }).catch(messageBox.handleError);
+};

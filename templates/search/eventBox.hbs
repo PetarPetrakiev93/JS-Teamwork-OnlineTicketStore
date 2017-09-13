@@ -1,0 +1,14 @@
+
+
+<div class="col-sm-4">
+    <div class="panel panel-primary clickable" id="{{_id}}" >
+        <div class="panel-heading">{{EventName}}</div>
+        {{#if CoverPicture}}
+            <div class="panel-body"><img src="{{CoverPicture}}" class="img-responsive" style="width:100%" style="" alt="Image" ></div>
+        {{else}}
+            <div class="panel-body"><img src="././bootstrap/static/no-image.jpg"  class="img-responsive"  alt="Image"></div>
+        {{/if}}
+        <div class="panel-footer">Date: {{CDate}}</div>
+        <div class="panel-footer">Location: {{Location}}</div>
+    </div>
+</div>
