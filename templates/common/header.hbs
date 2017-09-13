@@ -20,9 +20,6 @@
                     </ul>
                 </li>
                 <li><a href="#/events">All events</a></li>
-                {{#if isAdmin}}
-                <li><a href="#/createEvent">Create Event</a></li>
-                {{/if}}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {{#if loggedIn}}
@@ -44,7 +41,6 @@
                 <form action="#/admin" method="get">
                     <button class="btn btn-danger navbar-btn navbar-right" type="submit">Admin Panel</button>
                 </form>
-
             {{/if}}
         </div>
     </div>

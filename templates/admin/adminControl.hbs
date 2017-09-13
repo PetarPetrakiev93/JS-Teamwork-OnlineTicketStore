@@ -1,36 +1,49 @@
 {{> header}}
 {{#if loggedIn}}
-<div class="history">
-    <button class="history btn btn-info">Show all sales</button>
-</div>
-
-<div class="history">
-    <div class="history-content" style="display: none;">
-        <ul>
-            {{#each orders}}
-                <li>{{> order}}</li>
-            {{else}}
-                <li>No sales yet!</li>
-            {{/each}}
-
-        </ul>
+    <div class="history">
+        <a href="#/createEvent">
+            <button class="btn btn-info">Create Event</button>
+        </a>
     </div>
-</div>
-<div class="admin">
-    <button class="admin btn btn-info">Show all users</button>
-</div>
-<div class="admins">
-    <div class="admin-content" style="display: none;">
-        <form class="" action="#/admin/update" method="post">
+    <div class="history">
+        <a href="#/createCategory">
+            <button class="btn btn-info">Create Category</button>
+        </a>
+    </div>
+    <div class="history">
+        <button class="history btn btn-info">Show all sales</button>
+    </div>
+
+    <div class="history">
+        <div class="history-content" style="display: none;">
+            <ul>
+                {{#each orders}}
+                    <li>{{> order}}</li>
+                {{else}}
+                    <li>No sales yet!</li>
+                {{/each}}
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="admin">
+        <button class="admin btn btn-info">Show all users</button>
+    </div>
+
+    <div class="admins">
+        <div class="admin-content" style="display: none;">
+            <form class="" action="#/admin/update" method="post">
                 {{#each users}}
-                <div class="form-group">
-                    <label>Username: {{username}}</label>
-                    <input type="checkbox" name="user" value="{{_id}}" {{#if admin}}checked>Admin{{else}}>User{{/if}}<br>
-                </div>
+                    <div class="form-group">
+                        <label>Username: {{username}}</label>
+                            <input type="checkbox" name="user" value="{{_id}}" {{#if admin}}checked>Admin{{else}}
+                        >User{{/if}}<br>
+                    </div>
                 {{/each}}
                 <button type="submit" class="admins btn btn-info">Update</button>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 {{/if}}
 {{> footer}}
