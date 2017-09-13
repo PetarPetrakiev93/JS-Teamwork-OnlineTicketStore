@@ -8,11 +8,11 @@
     </div>
     <div class="container">
         <div class="price-heading">
-            <form>
+            <form method="get" action="#/events/filtered">
                 <div class="row">
                     <div class="col-md-0"></div>
                     <div class="col-md-4">
-                        <div class="panel panel-default">
+                        <div id="prices" class="panel panel-default">
                             <!-- Default panel contents -->
                             <div class="panel-heading">PRICE</div>
 
@@ -22,32 +22,28 @@
                                     Under 100 BGN
                                     <div class="material-switch pull-right">
                                         <input id="someSwitchOptionDefault" name="0-100" type="checkbox"/>
-                                        <label for="someSwitchOptionDefault" class="label-default"
-                                               onclick="searcher.priceClicked(this)"></label>
+                                        <label for="someSwitchOptionDefault" class="label-default"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     100-200 BGN
                                     <div class="material-switch pull-right">
                                         <input id="someSwitchOptionPrimary" name="100-200" type="checkbox"/>
-                                        <label for="someSwitchOptionPrimary" class="label-primary"
-                                               onclick="searcher.priceClicked(this)"></label>
+                                        <label for="someSwitchOptionPrimary" class="label-primary"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     200-500 BGN
                                     <div class="material-switch pull-right">
                                         <input id="someSwitchOptionSuccess" name="200-500" type="checkbox"/>
-                                        <label for="someSwitchOptionSuccess" class="label-success"
-                                               onclick="searcher.priceClicked(this)"></label>
+                                        <label for="someSwitchOptionSuccess" class="label-success"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     More than 500 BGN
                                     <div class="material-switch pull-right">
                                         <input id="someSwitchOptionInfo" name="500-9999" type="checkbox"/>
-                                        <label for="someSwitchOptionInfo" class="label-info"
-                                               onclick="searcher.priceClicked(this)"></label>
+                                        <label for="someSwitchOptionInfo" class="label-info"></label>
                                     </div>
                                 </li>
                             </ul>
@@ -56,7 +52,7 @@
 
 
                     <div class="col-md-4">
-                        <div class="panel panel-default">
+                        <div id="locationss" class="panel panel-default">
                             <!-- Default panel contents -->
                             <div class="panel-heading">LOCATION</div>
 
@@ -65,28 +61,28 @@
                                 <li class="list-group-item">
                                     Sofia
                                     <div class="material-switch pull-right">
-                                        <input id="one" name="one" type="checkbox"/>
+                                        <input id="one" name="Sofia" type="checkbox"/>
                                         <label for="one" class="label-default"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     Burgas
                                     <div class="material-switch pull-right">
-                                        <input id="two" name="two" type="checkbox"/>
+                                        <input id="two" name="Burgas" type="checkbox"/>
                                         <label for="two" class="label-primary"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     Vancouver
                                     <div class="material-switch pull-right">
-                                        <input id="three" name="three" type="checkbox"/>
+                                        <input id="three" name="Vancouver" type="checkbox"/>
                                         <label for="three" class="label-success"></label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     Plovdiv
                                     <div class="material-switch pull-right">
-                                        <input id="four" name="four" type="checkbox"/>
+                                        <input id="four" name="Plovdiv" type="checkbox"/>
                                         <label for="four" class="label-info"></label>
                                     </div>
                                 </li>

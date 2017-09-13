@@ -41,7 +41,7 @@ function startApp() {
         this.get('#/events', eventsController.displayEvents);
 
         //SHOW EVENTS FILTERED BY PRICE
-        this.get('#/events/filtered', eventsController.displayFiltered);
+        this.get('#/events/filtered', searcher.itemsClicked);
 
         //SHOW EVENTS BY CATEGORY
         this.get('#/events/category/:id', eventsController.displayEventsByCategory);
