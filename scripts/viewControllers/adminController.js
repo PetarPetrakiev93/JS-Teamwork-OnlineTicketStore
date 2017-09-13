@@ -45,6 +45,11 @@ adminController.getAdmin = function (ctx) {
                                             $($('div.admin-content')[0]).hide();
                                         }
                                     });
+
+                                    let button = $('#categoryBtn');
+                                    button.click(function () {
+                                        $('#categoryDiv').toggle();
+                                    });
                                 });
                             });
                         })

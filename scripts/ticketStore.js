@@ -64,7 +64,8 @@ function startApp() {
 
         //ADMIN
         this.get('#/admin', adminController.getAdmin);
-        this.post('#/admin/update', adminController.updateAdmins)
+        this.post('#/admin/update', adminController.updateAdmins);
+        this.post('#/createCategory', categoryController.createCategoryPOST);
 
     });
     app.run();
