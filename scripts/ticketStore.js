@@ -69,6 +69,8 @@ function startApp() {
 
         this.post('#/search', eventsController.search);
 
+        this.get('#/category/:id', categoryController.showByCategory);
+
     });
     app.run();
     return {app}

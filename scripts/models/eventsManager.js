@@ -12,6 +12,10 @@ const eventsManager = (() => {
         return requester.get('appdata', `Events?query={ "_id": { "$in": [${range} ] } }`)
     }
 
+    function getEventsInCategory(id) {
+        return requester.get('appdata', `Events/?query={"CategoryId":"${id}"}`)
+    }
+
     function editEvent(id, event) {
         return requester.update('appdata', `Events/${id}`, event);
     }
@@ -37,7 +41,8 @@ const eventsManager = (() => {
         createEvent,
         deleteEvent,
         getEventsByCategory,
-        getEventsInRange
+        getEventsInRange,
+        getEventsInCategory
     }
 
 })();

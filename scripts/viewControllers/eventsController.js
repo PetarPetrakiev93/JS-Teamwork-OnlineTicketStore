@@ -6,6 +6,7 @@ eventsController.createEventGET = function (ctx) {
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
     ctx.isAdmin = userManager.isAdmin();
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     categoriesManager.getAllCategories()
         .then(function (categories) {
             ctx.categories = categories;
@@ -160,7 +161,7 @@ eventsController.displayFiltered = function (ctx) {
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
-
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     let range = sessionStorage.getItem('ids');
     let eventsRange = sessionStorage.getItem('evIds');
         picturesManager.getPicturesInRange(range)
@@ -206,7 +207,7 @@ eventsController.displayEvents = function (ctx) {
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
-
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     picturesManager.getAllPictures()
         .then(function (pictures) {
             eventsManager.getEvents()
@@ -267,6 +268,7 @@ eventsController.displayEventsByCategory = function (ctx) {
 //EDIT EVENT
 eventsController.editEventGET = function (ctx) {
     ctx.isAdmin = userManager.isAdmin();
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     eventsManager.getEventDetails(eventsController.eventId)
         .then(function (event) {
             picturesManager.getAllPicturesByEventId(event._id)
@@ -391,6 +393,7 @@ eventsController.eventDetailsGET = function (ctx) {
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
     eventsController.eventId = eventId;
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
 
     picturesManager.getAllPicturesByEventId(eventId)
         .then(function (picture) {
@@ -523,7 +526,7 @@ eventsController.search = function (ctx) {
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
     ctx.id = sessionStorage.getItem('userId');
-
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     picturesManager.getAllPictures()
         .then(function (pictures) {
             eventsManager.getEvents()

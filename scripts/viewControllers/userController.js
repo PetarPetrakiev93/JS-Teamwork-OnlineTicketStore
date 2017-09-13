@@ -1,6 +1,7 @@
 const userController = {};
 //LOGIN
 userController.loginGET = function (ctx) {
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     ctx.loadPartials({
         header: './templates/common/header.hbs',
         footer: './templates/common/footer.hbs',
@@ -32,6 +33,7 @@ userController.loginPOST = function (ctx) {
 
 //REGISTER
 userController.registerGET = function (ctx) {
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     ctx.loadPartials({
         header: './templates/common/header.hbs',
         footer: './templates/common/footer.hbs',
@@ -77,6 +79,7 @@ userController.userDetails = function (ctx) {
     ctx.username = sessionStorage.getItem('username');
     ctx.isAdmin = userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     requester.get('appdata', 'Orders/?query={"_acl.creator":"' + sessionStorage.getItem('userId') + '"}')
         .then(function (orders) {
             for (let order of orders) {
@@ -105,6 +108,7 @@ userController.editUserGET = function (ctx) {
     ctx.username = sessionStorage.getItem('username');
     ctx.isAdmin = userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     ctx.loadPartials({
         header: './templates/common/header.hbs',
         footer: './templates/common/footer.hbs',

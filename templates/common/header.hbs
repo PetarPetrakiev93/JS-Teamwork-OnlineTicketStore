@@ -14,9 +14,9 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catalog<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#/concert">Concerts</a></li>
-                        <li><a href="#/festival">Festivals</a></li>
-                        <li><a href="#/plays">Theater Plays</a></li>
+                        {{#each categories}}
+                        <li><a href="#/category/:{{_id}}">{{CategoryName}}</a></li>
+                        {{/each}}
                     </ul>
                 </li>
                 <li><a href="#/events">All events</a></li>

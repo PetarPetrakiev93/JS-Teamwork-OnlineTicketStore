@@ -24,6 +24,7 @@ adminController.getAdmin = function (ctx) {
                                 }
                             }
                             ctx.users = users;
+                            ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
                             ctx.loadPartials({
                                 header: './templates/common/header.hbs',
                                 footer: './templates/common/footer.hbs',

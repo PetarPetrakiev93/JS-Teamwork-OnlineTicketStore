@@ -5,6 +5,7 @@ cartController.getOrders = function (ctx) {
     ctx.isAdmin = userManager.isAdmin();
     ctx.loggedIn = userManager.isLoggedIn();
     ctx.username = userManager.getUsername();
+    ctx.categories = JSON.parse(sessionStorage.getItem('categories'));
     ctx.id = sessionStorage.getItem('userId');
     requester.get('user', sessionStorage.getItem('userId'))
         .then(function (user) {
@@ -14,6 +15,7 @@ cartController.getOrders = function (ctx) {
                 totalPrice += (Number(o.numberTickets) * Number(o.price));
             }
             ctx.totalPrice = totalPrice;
+
             ctx.loadPartials({
                 header: './templates/common/header.hbs',
                 footer: './templates/common/footer.hbs',

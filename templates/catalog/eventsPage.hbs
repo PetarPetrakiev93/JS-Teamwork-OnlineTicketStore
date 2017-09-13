@@ -3,7 +3,6 @@
     <div class="jumbotron" style="margin-bottom: 0">
         <div class="container text-center">
             <h1>Online Store</h1>
-            <p>Mission, Vission &amp; Values</p>
         </div>
     </div>
     <div class="container">
@@ -73,17 +72,17 @@
                                     </div>
                                 </li>
                                 <li class="list-group-item">
-                                    Vancouver
-                                    <div class="material-switch pull-right">
-                                        <input id="three" name="Vancouver" type="checkbox"/>
-                                        <label for="three" class="label-success"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
                                     Plovdiv
                                     <div class="material-switch pull-right">
                                         <input id="four" name="Plovdiv" type="checkbox"/>
                                         <label for="four" class="label-info"></label>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    Vancouver
+                                    <div class="material-switch pull-right">
+                                        <input id="three" name="Vancouver" type="checkbox"/>
+                                        <label for="three" class="label-success"></label>
                                     </div>
                                 </li>
                             </ul>
@@ -94,40 +93,22 @@
 
 
                     <div class="col-md-4">
-                        <div class="panel panel-default">
+                        <div id="category" class="panel panel-default">
                             <!-- Default panel contents -->
                             <div class="panel-heading">CATEGORY</div>
 
                             <!-- List group -->
                             <ul class="list-group">
+                                {{#each categories}}
                                 <li class="list-group-item">
-                                    category 1
+                                    {{CategoryName}}
                                     <div class="material-switch pull-right">
-                                        <input id="1" name="1" type="checkbox"/>
-                                        <label for="1" class="label-default"></label>
+                                        <input id="{{_id}}" name="{{_id}}" type="checkbox"/>
+                                        <label for="{{_id}}" class="label-default"></label>
                                     </div>
                                 </li>
-                                <li class="list-group-item">
-                                    category 2
-                                    <div class="material-switch pull-right">
-                                        <input id="2" name="2" type="checkbox"/>
-                                        <label for="2" class="label-primary"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    category 3
-                                    <div class="material-switch pull-right">
-                                        <input id="3" name="3" type="checkbox"/>
-                                        <label for="3" class="label-success"></label>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    category 4
-                                    <div class="material-switch pull-right">
-                                        <input id="4" name="4" type="checkbox"/>
-                                        <label for="4" class="label-info"></label>
-                                    </div>
-                                </li>
+                                {{/each}}
+
                             </ul>
                         </div>
                     </div>

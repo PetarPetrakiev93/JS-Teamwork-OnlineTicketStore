@@ -6,9 +6,17 @@ const categoriesManager = (() => {
     function createCategory(category) {
         return requester.post('appdata', 'Categories', category)
     }
+    
+    function saveAllCategories() {
+        getAllCategories()
+            .then(function (categories) {
+                sessionStorage.setItem('categories', JSON.stringify(categories));
+            })
+    }
 
     return {
         getAllCategories,
-        createCategory
+        createCategory,
+        saveAllCategories
     }
 })();
