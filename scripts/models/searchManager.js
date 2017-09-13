@@ -32,12 +32,21 @@ const searcher = (()=>{
                     eventsManager.getEventsInRange(ev)
                         .then((filteredEvents) => {
                             let secondLevelFiltered = [];
-                            for (let x = 0; x < filteredEvents.length; x++) {
-                              if(locationNames.some((e) => {return e === filteredEvents[x].Location})
-                              && categoryIDs.some((e) => {return e === filteredEvents[x].CategoryId})){
-                                    secondLevelFiltered.push(filteredEvents[x]);
-                              }
+                            if(locationNames.length>0 && categoryIDs.length ===0){
+                                for (let x = 0; x < filteredEvents.length; x++) {
+                                    if(locationNames.some((e) => {return e === filteredEvents[x].Location})){
+                                        secondLevelFiltered.push(filteredEvents[x]);
+                                    }
+                                }
+                            }else{
+                                for (let x = 0; x < filteredEvents.length; x++) {
+                                    if(locationNames.some((e) => {return e === filteredEvents[x].Location})
+                                        && categoryIDs.some((e) => {return e === filteredEvents[x].CategoryId})){
+                                        secondLevelFiltered.push(filteredEvents[x]);
+                                    }
+                                }
                             }
+
                             if(locationNames.length === 0 && categoryIDs.length === 0){
                                 secondLevelFiltered = filteredEvents;
                             }
